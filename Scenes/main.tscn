@@ -1,0 +1,1911 @@
+[gd_scene load_steps=88 format=3 uid="uid://d2glnv32t8md1"]
+
+[ext_resource type="Script" uid="uid://chlcrco3oie33" path="res://Scripts/General/Game.gd" id="1_emb0w"]
+[ext_resource type="Script" uid="uid://nudevegx6152" path="res://Scripts/On Screen Elements/BackgroundEffects.gd" id="2_330he"]
+[ext_resource type="Script" path="res://Scripts/On Screen Elements/Minimap.gd" id="2_minimap"]
+[ext_resource type="Texture2D" uid="uid://cefyc1o8c12cw" path="res://Textures/Tracks/Donut Plains 1 - Sky Line.png" id="3_ht13n"]
+[ext_resource type="Shader" uid="uid://dauy2f13gf63q" path="res://Scripts/Shaders/ModeSeven.gdshader" id="3_okd74"]
+[ext_resource type="Texture2D" uid="uid://do4l3t6fepcy8" path="res://Textures/Tracks/Donut Plains 1.png" id="3_q5wi2"]
+[ext_resource type="Texture2D" uid="uid://b2p41drytlkxt" path="res://Textures/Tracks/Donut Plains 1 - Tree Line.png" id="3_vt36i"]
+[ext_resource type="Texture2D" uid="uid://cnp7d7djiq0dd" path="res://Textures/Tracks/Grass_Tile.png" id="4_7c8ey"]
+[ext_resource type="Script" uid="uid://da5g5ssjtpnrr" path="res://Scripts/World Elements/Pseudo3D.gd" id="4_s71t4"]
+[ext_resource type="Texture2D" uid="uid://bvioi2jfn2hmv" path="res://Textures/Racers/Yoshi Back.png" id="5_lfi8c"]
+[ext_resource type="Script" uid="uid://cu4gj3qtw8wk5" path="res://Scripts/General/Collision.gd" id="6_q57ja"]
+[ext_resource type="Texture2D" uid="uid://b56nphrtp74n6" path="res://Textures/Tracks/Donut Plains 1 - Road Type Map.png" id="7_aoipd"]
+[ext_resource type="Script" uid="uid://douglwqw1go8u" path="res://Scripts/On Screen Elements/SpriteHandler.gd" id="7_wmybs"]
+[ext_resource type="Script" uid="uid://7j22fruxga8a" path="res://Scripts/World Elements/Racers/Player.gd" id="8_lejxo"]
+[ext_resource type="Script" uid="uid://8qepoersu4xt" path="res://Scripts/World Elements/Racers/Mario.gd" id="8_mario"]
+[ext_resource type="Script" uid="uid://bb5lgbfpjxpbq" path="res://Scripts/World Elements/Racers/Luigi.gd" id="9_luigi"]
+[ext_resource type="Script" uid="uid://blwjynrfcb66j" path="res://Scripts/World Elements/Racers/Bowser.gd" id="10_bowser"]
+[ext_resource type="Script" uid="uid://djl8i2j8ukamx" path="res://Scripts/World Elements/Racers/DonkeyKong.gd" id="10_donkeykong"]
+[ext_resource type="Script" uid="uid://d00rxkyeeaguo" path="res://Scripts/World Elements/Racers/Yoshi.gd" id="10_yoshi"]
+[ext_resource type="Script" uid="uid://b7avx3fp2eoyj" path="res://Scripts/World Elements/Hazard.gd" id="11_gfs62"]
+[ext_resource type="Texture2D" uid="uid://dwtfoow25238t" path="res://Textures/Racers/Particles/Road_Type_Effects_Sheet.png" id="11_w61pk"]
+[ext_resource type="Script" uid="uid://cjiql62qedlox" path="res://Scripts/General/AnimationHandler.gd" id="13_6hxns"]
+[ext_resource type="Texture2D" uid="uid://cdyv5cen6o3hk" path="res://Textures/Racers/mario-3-0000-Photoroom.png" id="16_hibaj"]
+[ext_resource type="Texture2D" uid="uid://d1nvgl514d4vw" path="res://Textures/Hazards/Orange_Pipes.png" id="16_t3snl"]
+[ext_resource type="Texture2D" uid="uid://bfpvub0d3wmwp" path="res://Textures/Racers/mario-3-0000-Photoroom_mirror.png" id="17_pdsj5"]
+[ext_resource type="Texture2D" uid="uid://c073etuygn2jd" path="res://Textures/Racers/luigi-3-0000-Photoroom.png" id="20_u50mg"]
+[ext_resource type="Texture2D" uid="uid://ckxhmkkamcatc" path="res://Textures/Racers/luigi-3-0000-Photoroom_mirror.png" id="21_cbgmd"]
+[ext_resource type="Texture2D" uid="uid://r7li2mlmst2q" path="res://Textures/Racers/donkeykongjr-3.png" id="22_6vcvc"]
+[ext_resource type="Texture2D" uid="uid://d3hevj7t2xmv6" path="res://Textures/Racers/donkeykongjr-3_mirror.png" id="23_7k868"]
+[ext_resource type="Texture2D" uid="uid://dt4tujqpcgwa7" path="res://Textures/Racers/bowser-3.png" id="24_hpc6h"]
+[ext_resource type="Texture2D" uid="uid://utndbb0y7baa" path="res://Textures/Racers/bowser-3_mirror.png" id="25_kltya"]
+[ext_resource type="Texture2D" uid="uid://j2o50hrc888s" path="res://Textures/Racers/yoshi.png" id="26_e08e2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lhngl"]
+shader = ExtResource("3_okd74")
+shader_parameter/trackTexture = ExtResource("3_q5wi2")
+shader_parameter/grassTexture = ExtResource("4_7c8ey")
+shader_parameter/mapMatrix = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_65qb5"]
+resource_name = "Driving_Off_Road_Anim"
+length = 0.80001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Right Wheel:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-8, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right Wheel:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Right Wheel:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(16, 0, 16, 8)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Right Wheel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(48, 36)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Left Wheel:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(8, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Left Wheel:flip_h")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Left Wheel:region_rect")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(16, 0, 16, 8)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Left Wheel:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-48, 36)]
+}
+
+[sub_resource type="Animation" id="Animation_mvsyo"]
+resource_name = "Gravel_Anim"
+length = 0.20001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Right Wheel:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-4, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right Wheel:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Right Wheel:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(80, 16, 8, 8)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Right Wheel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(48, 36), Vector2(48, 40)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Right Wheel Special:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-8, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Right Wheel Special:flip_h")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Right Wheel Special:region_rect")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(80, 0, 16, 16)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Right Wheel Special:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(75, 56), Vector2(75, 50)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Left Wheel:offset")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(4, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Left Wheel:flip_h")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Left Wheel:region_rect")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(80, 16, 8, 8)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Left Wheel:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-48, 36), Vector2(-48, 40)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Left Wheel Special:offset")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(8, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Left Wheel Special:flip_h")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Left Wheel Special:region_rect")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(80, 0, 16, 16)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Left Wheel Special:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-75, 56), Vector2(-75, 50)]
+}
+
+[sub_resource type="Animation" id="Animation_j51x3"]
+resource_name = "Off_Road_Anim"
+length = 0.80001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Right Wheel:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-8, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right Wheel:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Right Wheel:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(16, 8, 16, 8)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Right Wheel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(48, 36)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Left Wheel:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(8, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Left Wheel:flip_h")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Left Wheel:region_rect")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(16, 8, 16, 8)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Left Wheel:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-48, 36)]
+}
+
+[sub_resource type="Animation" id="Animation_wnosx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Right Wheel Special:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(75, 50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Left Wheel Special:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-75, 50)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Right Wheel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(48, 40)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Left Wheel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-48, 40)]
+}
+
+[sub_resource type="Animation" id="Animation_r2am7"]
+resource_name = "Sink_Anim"
+length = 0.80001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Right Wheel:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-8, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right Wheel:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Right Wheel:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(0, 8, 16, 8), Rect2(0, 16, 16, 8)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Right Wheel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(48, 36)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Left Wheel:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(8, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Left Wheel:flip_h")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Left Wheel:region_rect")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(0, 8, 16, 8), Rect2(0, 16, 16, 8)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Left Wheel:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-48, 36)]
+}
+
+[sub_resource type="Animation" id="Animation_37x3c"]
+resource_name = "Sink_Splash_Anim"
+length = 0.80001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Right Wheel:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-8, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right Wheel:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Right Wheel:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(0, 16, 16, 8)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Right Wheel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(48, 36)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Right Wheel Special:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-8, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Right Wheel Special:flip_h")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Right Wheel Special:region_rect")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(64, 0, 16, 24), Rect2(48, 0, 16, 8), Rect2(48, 0, 16, 24), Rect2(48, 0, 16, 8)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Right Wheel Special:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(48, 12)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Left Wheel:offset")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(8, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Left Wheel:flip_h")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Left Wheel:region_rect")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(0, 16, 16, 8)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Left Wheel:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-48, 36)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Left Wheel Special:offset")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(8, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Left Wheel Special:flip_h")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Left Wheel Special:region_rect")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(64, 0, 16, 24), Rect2(0, 0, 16, 8), Rect2(48, 0, 16, 24), Rect2(0, 0, 16, 8)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Left Wheel Special:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(-48, 12)]
+}
+tracks/16/type = "method"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("../../../Animation Handler")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [false],
+"method": &"SetFirstTimeSink"
+}, {
+"args": [],
+"method": &"PlaySinkAnimation"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2e3ut"]
+_data = {
+&"Driving_Off_Road_Anim": SubResource("Animation_65qb5"),
+&"Gravel_Anim": SubResource("Animation_mvsyo"),
+&"Idle_Off_Road_Anim": SubResource("Animation_j51x3"),
+&"RESET": SubResource("Animation_wnosx"),
+&"Sink_Anim": SubResource("Animation_r2am7"),
+&"Sink_Splash_Anim": SubResource("Animation_37x3c")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u50mg"]
+atlas = ExtResource("16_hibaj")
+region = Rect2(0, 0, 29, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdsj5"]
+atlas = ExtResource("16_hibaj")
+region = Rect2(29, 0, 29, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ee4r6"]
+atlas = ExtResource("16_hibaj")
+region = Rect2(58, 0, 29, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gt3je"]
+atlas = ExtResource("16_hibaj")
+region = Rect2(87, 0, 29, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pmx8"]
+atlas = ExtResource("16_hibaj")
+region = Rect2(116, 0, 29, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbgmd"]
+atlas = ExtResource("17_pdsj5")
+region = Rect2(207, 0, 29, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1w6v2"]
+atlas = ExtResource("17_pdsj5")
+region = Rect2(178, 0, 29, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ueoa1"]
+atlas = ExtResource("17_pdsj5")
+region = Rect2(149, 0, 29, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vcvc"]
+atlas = ExtResource("17_pdsj5")
+region = Rect2(120, 0, 29, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cbgmd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u50mg")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdsj5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ee4r6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gt3je")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pmx8")
+}],
+"loop": true,
+"name": &"Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbgmd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1w6v2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ueoa1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6vcvc")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k868"]
+atlas = ExtResource("20_u50mg")
+region = Rect2(0, 0, 29, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpc6h"]
+atlas = ExtResource("20_u50mg")
+region = Rect2(29, 0, 29, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kltya"]
+atlas = ExtResource("20_u50mg")
+region = Rect2(58, 0, 29, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e08e2"]
+atlas = ExtResource("20_u50mg")
+region = Rect2(87, 0, 29, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_neg2b"]
+atlas = ExtResource("21_cbgmd")
+region = Rect2(239, 0, 29, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r33sp"]
+atlas = ExtResource("21_cbgmd")
+region = Rect2(210, 0, 29, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdf80"]
+atlas = ExtResource("21_cbgmd")
+region = Rect2(181, 0, 29, 35)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jwpg7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7k868")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpc6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kltya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e08e2")
+}],
+"loop": true,
+"name": &"Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_neg2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r33sp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdf80")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwpg7"]
+atlas = ExtResource("22_6vcvc")
+region = Rect2(0, 0, 31, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2e45"]
+atlas = ExtResource("22_6vcvc")
+region = Rect2(31, 0, 31, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_536cc"]
+atlas = ExtResource("22_6vcvc")
+region = Rect2(62, 0, 31, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqgau"]
+atlas = ExtResource("23_7k868")
+region = Rect2(186, 0, 31, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cuat"]
+atlas = ExtResource("23_7k868")
+region = Rect2(155, 0, 31, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o1aky"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwpg7")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2e45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_536cc")
+}],
+"loop": true,
+"name": &"Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aqgau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cuat")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1aky"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(199, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54nrm"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(167, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55jeb"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(135, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsvbx"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(103, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bv80c"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(71, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptfg5"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(39, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2daye"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(231, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1semv"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(263, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2060n"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(295, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ml46"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(327, 35, 32, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qax2n"]
+atlas = ExtResource("26_e08e2")
+region = Rect2(359, 35, 32, 35)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yoshi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1aky")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54nrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55jeb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsvbx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bv80c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ptfg5")
+}],
+"loop": true,
+"name": &"Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2daye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1semv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2060n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ml46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qax2n")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwxat"]
+atlas = ExtResource("24_hpc6h")
+region = Rect2(0, 0, 29, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aa8k8"]
+atlas = ExtResource("24_hpc6h")
+region = Rect2(29, 0, 29, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqrg6"]
+atlas = ExtResource("24_hpc6h")
+region = Rect2(58, 0, 29, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwwfm"]
+atlas = ExtResource("24_hpc6h")
+region = Rect2(87, 0, 29, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8vy0"]
+atlas = ExtResource("24_hpc6h")
+region = Rect2(116, 0, 29, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jut3y"]
+atlas = ExtResource("25_kltya")
+region = Rect2(242, 0, 29, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2nl5"]
+atlas = ExtResource("25_kltya")
+region = Rect2(213, 0, 29, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmskm"]
+atlas = ExtResource("25_kltya")
+region = Rect2(184, 0, 29, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdkp6"]
+atlas = ExtResource("25_kltya")
+region = Rect2(155, 0, 29, 37)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_54nrm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwxat")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aa8k8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqrg6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwwfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8vy0")
+}],
+"loop": true,
+"name": &"Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jut3y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2nl5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmskm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xdkp6")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_abc123"]
+font_size = 12
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("_map", "_collision", "_spriteHandler", "_animationHandler", "_backgroundElements", "_minimap")]
+script = ExtResource("1_emb0w")
+_map = NodePath("Map")
+_collision = NodePath("Map/Collision Handler")
+_spriteHandler = NodePath("Sprite Handler")
+_animationHandler = NodePath("Sprite Handler/Animation Handler")
+_backgroundElements = NodePath("Background Elements")
+_minimap = NodePath("UI/MinimapArea/Minimap")
+
+[node name="Background Elements" type="Node2D" parent="." node_paths=PackedStringArray("_skyLine", "_treeLine")]
+script = ExtResource("2_330he")
+_skyLine = NodePath("Sky Line")
+_treeLine = NodePath("Tree Line")
+
+[node name="Background" type="Sprite2D" parent="Background Elements"]
+z_index = -1
+position = Vector2(240, 180)
+scale = Vector2(15, 11.25)
+
+[node name="Sky Line" type="Sprite2D" parent="Background Elements"]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(0, 48)
+scale = Vector2(2, 2)
+texture = ExtResource("3_ht13n")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 240, 32)
+
+[node name="Tree Line" type="Sprite2D" parent="Background Elements"]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(0, 48)
+scale = Vector2(2, 2)
+texture = ExtResource("3_vt36i")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 240, 32)
+
+[node name="Map" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_lhngl")
+position = Vector2(240, 180)
+scale = Vector2(0.46875, 0.351563)
+texture = ExtResource("3_q5wi2")
+script = ExtResource("4_s71t4")
+_mapStartRotationAngle = Vector2(4.9, 6.25)
+_mapMaxRotationSpeed = 1.5
+_mapAccelRotationSpeed = 2.0
+_mapDeaccelRotationSpeed = 3.0
+_rotationRadius = 36.0
+_mapVerticalPosition = 3.8
+
+[node name="Collision Handler" type="Node" parent="Map"]
+script = ExtResource("6_q57ja")
+_collisionMap = ExtResource("7_aoipd")
+_wallColor = Color(0.4, 0.4, 0.4, 1)
+_roadTypeColors = Array[Color]([Color(0, 0, 0, 1), Color(1, 1, 1, 1), Color(0.8, 0.8, 0.8, 1), Color(0.603922, 0.603922, 0.603922, 1), Color(0.4, 0.4, 0.4, 1), Color(0.2, 0.2, 0.2, 1)])
+
+[node name="Sprite Handler" type="Node2D" parent="."]
+script = ExtResource("7_wmybs")
+
+[node name="Racers" type="Node2D" parent="Sprite Handler"]
+
+[node name="Player" type="Node2D" parent="Sprite Handler/Racers" node_paths=PackedStringArray("_collisionHandler", "_spriteGFX")]
+visible = false
+position = Vector2(-1.52588e-05, 0)
+script = ExtResource("8_lejxo")
+_movementDeaccel = 160.0
+_collisionHandler = NodePath("../../../Map/Collision Handler")
+_spriteGFX = NodePath("GFX")
+
+[node name="GFX" type="Sprite2D" parent="Sprite Handler/Racers/Player"]
+z_as_relative = false
+texture_filter = 1
+position = Vector2(1.52588e-05, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("5_lfi8c")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="Road Type Effects" type="Node2D" parent="Sprite Handler/Racers/Player"]
+visible = false
+
+[node name="Effects Player" type="AnimationPlayer" parent="Sprite Handler/Racers/Player/Road Type Effects"]
+libraries = {
+&"": SubResource("AnimationLibrary_2e3ut")
+}
+
+[node name="Right Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Player/Road Type Effects"]
+texture_filter = 1
+position = Vector2(48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Right Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Player/Road Type Effects"]
+texture_filter = 1
+position = Vector2(75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(48, 0, 16, 8)
+
+[node name="Left Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Player/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Left Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Player/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 8)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprite Handler/Racers/Player"]
+sprite_frames = SubResource("SpriteFrames_cbgmd")
+animation = &"Left"
+
+[node name="Mario" type="Node2D" parent="Sprite Handler/Racers" node_paths=PackedStringArray("_collisionHandler", "_spriteGFX")]
+visible = false
+position = Vector2(-1.52588e-05, 0)
+script = ExtResource("8_mario")
+_movementDeaccel = 160.0
+_collisionHandler = NodePath("../../../Map/Collision Handler")
+_spriteGFX = NodePath("AnimatedSprite2DMario")
+
+[node name="Road Type Effects" type="Node2D" parent="Sprite Handler/Racers/Mario"]
+visible = false
+
+[node name="Effects Player" type="AnimationPlayer" parent="Sprite Handler/Racers/Mario/Road Type Effects"]
+libraries = {
+&"": SubResource("AnimationLibrary_2e3ut")
+}
+
+[node name="Right Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Mario/Road Type Effects"]
+texture_filter = 1
+position = Vector2(48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Right Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Mario/Road Type Effects"]
+texture_filter = 1
+position = Vector2(75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(48, 0, 16, 8)
+
+[node name="Left Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Mario/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Left Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Mario/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 8)
+
+[node name="AnimatedSprite2DMario" type="AnimatedSprite2D" parent="Sprite Handler/Racers/Mario"]
+texture_filter = 1
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_cbgmd")
+animation = &"Idle"
+
+[node name="Luigi" type="Node2D" parent="Sprite Handler/Racers" node_paths=PackedStringArray("_collisionHandler", "_spriteGFX")]
+visible = false
+position = Vector2(-1.52588e-05, 0)
+script = ExtResource("9_luigi")
+_movementDeaccel = 160.0
+_collisionHandler = NodePath("../../../Map/Collision Handler")
+_spriteGFX = NodePath("AnimatedSprite2DLuigi")
+
+[node name="Road Type Effects" type="Node2D" parent="Sprite Handler/Racers/Luigi"]
+visible = false
+
+[node name="Effects Player" type="AnimationPlayer" parent="Sprite Handler/Racers/Luigi/Road Type Effects"]
+libraries = {
+&"": SubResource("AnimationLibrary_2e3ut")
+}
+
+[node name="Right Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Luigi/Road Type Effects"]
+texture_filter = 1
+position = Vector2(48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Right Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Luigi/Road Type Effects"]
+texture_filter = 1
+position = Vector2(75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(48, 0, 16, 8)
+
+[node name="Left Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Luigi/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Left Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Luigi/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 8)
+
+[node name="AnimatedSprite2DLuigi" type="AnimatedSprite2D" parent="Sprite Handler/Racers/Luigi"]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_jwpg7")
+animation = &"Left"
+
+[node name="DonkeyKong" type="Node2D" parent="Sprite Handler/Racers" node_paths=PackedStringArray("_collisionHandler", "_spriteGFX")]
+visible = false
+position = Vector2(-1.52588e-05, 0)
+script = ExtResource("10_donkeykong")
+_movementDeaccel = 160.0
+_collisionHandler = NodePath("../../../Map/Collision Handler")
+_spriteGFX = NodePath("AnimatedSprite2DDonkeyKong")
+
+[node name="Road Type Effects" type="Node2D" parent="Sprite Handler/Racers/DonkeyKong"]
+visible = false
+
+[node name="Effects Player" type="AnimationPlayer" parent="Sprite Handler/Racers/DonkeyKong/Road Type Effects"]
+libraries = {
+&"": SubResource("AnimationLibrary_2e3ut")
+}
+
+[node name="Right Wheel" type="Sprite2D" parent="Sprite Handler/Racers/DonkeyKong/Road Type Effects"]
+texture_filter = 1
+position = Vector2(48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Right Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/DonkeyKong/Road Type Effects"]
+texture_filter = 1
+position = Vector2(75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(48, 0, 16, 8)
+
+[node name="Left Wheel" type="Sprite2D" parent="Sprite Handler/Racers/DonkeyKong/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Left Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/DonkeyKong/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 8)
+
+[node name="AnimatedSprite2DDonkeyKong" type="AnimatedSprite2D" parent="Sprite Handler/Racers/DonkeyKong"]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_o1aky")
+animation = &"Right"
+
+[node name="Yoshi" type="Node2D" parent="Sprite Handler/Racers" node_paths=PackedStringArray("_collisionHandler", "_spriteGFX")]
+visible = false
+position = Vector2(-1.52588e-05, 0)
+script = ExtResource("10_yoshi")
+_movementDeaccel = 160.0
+_collisionHandler = NodePath("../../../Map/Collision Handler")
+_spriteGFX = NodePath("AnimatedSprite2DYoshi")
+
+[node name="Road Type Effects" type="Node2D" parent="Sprite Handler/Racers/Yoshi"]
+visible = false
+
+[node name="Effects Player" type="AnimationPlayer" parent="Sprite Handler/Racers/Yoshi/Road Type Effects"]
+libraries = {
+&"": SubResource("AnimationLibrary_2e3ut")
+}
+
+[node name="Right Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Yoshi/Road Type Effects"]
+texture_filter = 1
+position = Vector2(48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Right Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Yoshi/Road Type Effects"]
+texture_filter = 1
+position = Vector2(75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(48, 0, 16, 8)
+
+[node name="Left Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Yoshi/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Left Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Yoshi/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 8)
+
+[node name="AnimatedSprite2DYoshi" type="AnimatedSprite2D" parent="Sprite Handler/Racers/Yoshi"]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_yoshi")
+animation = &"Idle"
+
+[node name="Bowser" type="Node2D" parent="Sprite Handler/Racers" node_paths=PackedStringArray("_collisionHandler", "_spriteGFX")]
+visible = false
+position = Vector2(-1.52588e-05, 0)
+script = ExtResource("10_bowser")
+_movementDeaccel = 160.0
+_collisionHandler = NodePath("../../../Map/Collision Handler")
+_spriteGFX = NodePath("AnimatedSprite2DBowser")
+
+[node name="Road Type Effects" type="Node2D" parent="Sprite Handler/Racers/Bowser"]
+visible = false
+
+[node name="Effects Player" type="AnimationPlayer" parent="Sprite Handler/Racers/Bowser/Road Type Effects"]
+libraries = {
+&"": SubResource("AnimationLibrary_2e3ut")
+}
+
+[node name="Right Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Bowser/Road Type Effects"]
+texture_filter = 1
+position = Vector2(48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Right Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Bowser/Road Type Effects"]
+texture_filter = 1
+position = Vector2(75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(-8, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(48, 0, 16, 8)
+
+[node name="Left Wheel" type="Sprite2D" parent="Sprite Handler/Racers/Bowser/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-48, 40)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 8)
+
+[node name="Left Wheel Special" type="Sprite2D" parent="Sprite Handler/Racers/Bowser/Road Type Effects"]
+texture_filter = 1
+position = Vector2(-75, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("11_w61pk")
+offset = Vector2(8, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 8)
+
+[node name="AnimatedSprite2DBowser" type="AnimatedSprite2D" parent="Sprite Handler/Racers/Bowser"]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_54nrm")
+animation = &"Left"
+
+[node name="Hazards" type="Node2D" parent="Sprite Handler"]
+
+[node name="Bridge" type="Node2D" parent="Sprite Handler/Hazards"]
+
+[node name="Green Pipe" type="Sprite2D" parent="Sprite Handler/Hazards/Bridge" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(400, 0, 64)
+
+[node name="Green Pipe2" type="Sprite2D" parent="Sprite Handler/Hazards/Bridge" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(400, 0, 144)
+
+[node name="Green Pipe3" type="Sprite2D" parent="Sprite Handler/Hazards/Bridge" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(616, 0, 64)
+
+[node name="Green Pipe4" type="Sprite2D" parent="Sprite Handler/Hazards/Bridge" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(616, 0, 144)
+
+[node name="Shortcut" type="Node2D" parent="Sprite Handler/Hazards"]
+
+[node name="Green Pipe" type="Sprite2D" parent="Sprite Handler/Hazards/Shortcut" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(744, 0, 416)
+
+[node name="Green Pipe2" type="Sprite2D" parent="Sprite Handler/Hazards/Shortcut" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(744, 0, 552)
+
+[node name="Green Pipe3" type="Sprite2D" parent="Sprite Handler/Hazards/Shortcut" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(848, 0, 464)
+
+[node name="Green Pipe4" type="Sprite2D" parent="Sprite Handler/Hazards/Shortcut" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(848, 0, 528)
+
+[node name="Lake" type="Node2D" parent="Sprite Handler/Hazards"]
+
+[node name="Green Pipe" type="Sprite2D" parent="Sprite Handler/Hazards/Lake" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(552, 0, 336)
+
+[node name="Green Pipe2" type="Sprite2D" parent="Sprite Handler/Hazards/Lake" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(464, 0, 432)
+
+[node name="Green Pipe3" type="Sprite2D" parent="Sprite Handler/Hazards/Lake" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(464, 0, 304)
+
+[node name="Green Pipe4" type="Sprite2D" parent="Sprite Handler/Hazards/Lake" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(336, 0, 336)
+
+[node name="Last Turn" type="Node2D" parent="Sprite Handler/Hazards"]
+
+[node name="Green Pipe" type="Sprite2D" parent="Sprite Handler/Hazards/Last Turn" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(216, 0, 1008)
+
+[node name="Green Pipe2" type="Sprite2D" parent="Sprite Handler/Hazards/Last Turn" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(136, 0, 976)
+
+[node name="Green Pipe3" type="Sprite2D" parent="Sprite Handler/Hazards/Last Turn" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(88, 0, 904)
+
+[node name="Green Pipe4" type="Sprite2D" parent="Sprite Handler/Hazards/Last Turn" node_paths=PackedStringArray("_spriteGFX")]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("16_t3snl")
+region_enabled = true
+region_rect = Rect2(0, 0, 24, 32)
+script = ExtResource("11_gfs62")
+_totalDetailStates = 11
+_spriteGFX = NodePath(".")
+_mapPosition = Vector3(64, 0, 816)
+
+[node name="Animation Handler" type="Node" parent="Sprite Handler" node_paths=PackedStringArray("_effectsPlayer", "_specialWheelEffect")]
+script = ExtResource("13_6hxns")
+_effectsPlayer = NodePath("../Racers/Mario/Road Type Effects/Effects Player")
+_specialWheelEffect = [NodePath("../Racers/Mario/Road Type Effects/Right Wheel Special"), NodePath("../Racers/Mario/Road Type Effects/Left Wheel Special")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="GameplayArea" type="Control" parent="UI"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MinimapArea" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -360.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MinimapBackground" type="ColorRect" parent="UI/MinimapArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="Minimap" type="Control" parent="UI/MinimapArea" node_paths=PackedStringArray("_mapBackground", "_playerIcon")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -180.0
+offset_right = 180.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_minimap")
+_mapBackground = NodePath("MapBackground")
+_playerIcon = NodePath("PlayerIcon")
+
+[node name="MapBackground" type="TextureRect" parent="UI/MinimapArea/Minimap"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerIcon" type="ColorRect" parent="UI/MinimapArea/Minimap"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.2, 0.2, 1)
+
+[node name="Debug" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -140.0
+offset_right = 200.0
+offset_bottom = -120.0
+grow_vertical = 0
+
+[node name="PositionLabel" type="Label" parent="UI/Debug"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Position: (0, 0)"
+label_settings = SubResource("LabelSettings_abc123")

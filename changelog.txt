@@ -1,0 +1,13 @@
+CHANGELOG - AI Opponents Fix
+============================
+
+Scripts/World Elements/Racers/AIBehavior.gd:
+- update_ai_behavior(): Integra con sistema Player.Update() en lugar de bypasearlo
+- setup_navigation_agent(): Simplifica configuración NavigationAgent2D
+- update_ai_input(): Movimiento directo hacia waypoints, fuerza velocidad mínima 30.0
+
+Scripts/General/Game.gd:
+- _process(): Mueve actualización AI al loop principal con player para consistencia física
+- Elimina duplicación de update AI en _process()
+
+OBJETIVO: Hacer que al menos 1 oponente AI se mueva con _movementSpeed > 0
