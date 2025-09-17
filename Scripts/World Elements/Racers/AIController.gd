@@ -49,6 +49,7 @@ func setup_ai(char_name: String, start_pos: Vector3, char_node: Node2D, player_r
 	print("  - Start position: ", start_pos)
 	
 	setup_ai_personality()
+	setup_race_waypoints()  # Initialize waypoints for racing circuit
 	
 	# Initialize position - all characters extend Player which has SetMapPosition
 	if character_node.has_method("SetMapPosition"):
@@ -119,41 +120,58 @@ func setup_ai_personality():
 			ai_skill = 0.7
 
 func setup_race_waypoints():
-	# Enhanced waypoints that follow the actual track circuit more accurately
+	# Improved waypoints based on actual Donut Plains circuit layout
+	# Following the natural racing line with proper cornering points
 	race_waypoints = [
+		# Start/Finish area and initial straight
 		Vector3(123, 0, 513),   # Start/Finish line
-		Vector3(135, 0, 500),   # Just after start
-		Vector3(150, 0, 480),   # Initial acceleration zone
-		Vector3(170, 0, 450),   # Early track section
-		Vector3(190, 0, 420),   # Approach first curve
-		Vector3(220, 0, 390),   # First curve entry
-		Vector3(260, 0, 370),   # Mid-track section
-		Vector3(300, 0, 355),   # Track center-right
-		Vector3(340, 0, 340),   # Right side approach
-		Vector3(380, 0, 330),   # Far right section
-		Vector3(420, 0, 315),   # Right curve start
-		Vector3(450, 0, 285),   # Right curve apex
-		Vector3(465, 0, 250),   # Top right section
-		Vector3(460, 0, 210),   # Top section entry
-		Vector3(440, 0, 180),   # Top section
-		Vector3(400, 0, 160),   # Top left curve start
-		Vector3(350, 0, 150),   # Top left curve
-		Vector3(300, 0, 155),   # Top left apex
-		Vector3(250, 0, 170),   # Left side top
-		Vector3(200, 0, 200),   # Left side upper
-		Vector3(170, 0, 240),   # Left side middle
-		Vector3(150, 0, 280),   # Left side lower
-		Vector3(140, 0, 320),   # Left bottom curve
-		Vector3(135, 0, 360),   # Left side return
-		Vector3(130, 0, 400),   # Approaching finish area
-		Vector3(125, 0, 440),   # Pre-finish zone
-		Vector3(123, 0, 480),   # Final approach
+		Vector3(140, 0, 480),   # Post-start acceleration
+		Vector3(160, 0, 450),   # Early straight section
+		Vector3(180, 0, 420),   # Building speed
+		
+		# First major turn (right turn)
+		Vector3(210, 0, 390),   # Turn entry
+		Vector3(250, 0, 370),   # Turn apex approach
+		Vector3(290, 0, 350),   # Mid-turn
+		Vector3(330, 0, 330),   # Turn exit
+		
+		# Right side straight and bridge area
+		Vector3(370, 0, 310),   # Right straight
+		Vector3(400, 0, 290),   # Bridge approach (near 400,144 from pipe locations)
+		Vector3(430, 0, 270),   # Bridge crossing
+		Vector3(460, 0, 250),   # Post-bridge
+		
+		# Top section and hairpin turn
+		Vector3(480, 0, 220),   # Top right approach
+		Vector3(490, 0, 190),   # Hairpin entry
+		Vector3(485, 0, 160),   # Hairpin apex
+		Vector3(470, 0, 140),   # Hairpin mid
+		Vector3(450, 0, 130),   # Hairpin exit
+		
+		# Top straight and left turn
+		Vector3(420, 0, 125),   # Top straight
+		Vector3(380, 0, 130),   # Left turn entry
+		Vector3(340, 0, 145),   # Left turn apex
+		Vector3(300, 0, 165),   # Left turn exit
+		
+		# Left side section with lake area
+		Vector3(260, 0, 190),   # Left side
+		Vector3(220, 0, 220),   # Lake area approach (near 336,336 from pipe locations)
+		Vector3(190, 0, 260),   # Lake section
+		Vector3(170, 0, 300),   # Lake exit
+		
+		# Bottom section and final turns
+		Vector3(160, 0, 340),   # Bottom left
+		Vector3(155, 0, 380),   # Final turn entry
+		Vector3(150, 0, 420),   # Final turn
+		Vector3(145, 0, 460),   # Pre-finish
+		Vector3(135, 0, 490),   # Final approach
 	]
 	
 	# Start with first waypoint
 	if race_waypoints.size() > 0:
 		set_target_waypoint(0)
-		print("🗺️ Enhanced AI ", character_name, " racing circuit waypoints setup: ", race_waypoints.size(), " points")
+		print("🗺️ Enhanced AI ", character_name, " Donut Plains racing circuit waypoints setup: ", race_waypoints.size(), " points")
 
 func set_target_waypoint(index: int):
 	if index >= 0 and index < race_waypoints.size():
@@ -168,11 +186,10 @@ func update_ai_behavior(mapForward: Vector3):
 	# Ensure sprite scale is maintained (fix for small sprites)
 	maintain_sprite_scale()
 	
-	# Simple player following logic (debug every 120 frames)
-	if Engine.get_process_frames() % 120 == 0:
-		follow_player_simple()
-	else:
-		follow_player_simple_quiet()
+	# Update waypoint following and AI behavior
+	update_waypoint_following()
+	update_behavior_based_on_player()
+	update_ai_input()
 	
 	# Since all characters extend Player, they all have the Update method
 	character_node.Update(mapForward)
@@ -183,7 +200,9 @@ func update_ai_behavior(mapForward: Vector3):
 		var speed = character_node._movementSpeed
 		var input_dir = character_node._inputDir
 		var player_dist = get_distance_to_player()
-		print("🤖 AI ", character_name, " | Pos: (%.0f,%.0f) | Speed: %.1f | Input: (%.2f,%.2f) | Player Dist: %.0f" % [pos.x, pos.z, speed, input_dir.x, input_dir.y, player_dist])
+		var behavior = get_behavior_name()
+		var target_waypoint = waypoint_index if waypoint_index < race_waypoints.size() else -1
+		print("🤖 AI ", character_name, " | Pos: (%.0f,%.0f) | Speed: %.1f | Input: (%.2f,%.2f) | Behavior: %s | Waypoint: %d | Player Dist: %.0f" % [pos.x, pos.z, speed, input_dir.x, input_dir.y, behavior, target_waypoint, player_dist])
 
 func update_waypoint_following():
 	if race_waypoints.size() == 0:

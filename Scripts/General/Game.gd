@@ -18,7 +18,7 @@ var _tKeyPressed : bool = false
 var _vKeyPressed : bool = false
 
 # Variables para sistema de oponentes AI
-var _ai_opponents : Array[AIOpponent] = []
+var _ai_opponents : Array[Racer] = []
 var _ai_opponent_script = preload("res://Scripts/World Elements/Racers/AIOpponent.gd")
 var _available_characters : Array[String] = ["mario", "luigi", "bowser", "donkikon"]
 var _opponents_created : bool = false
@@ -623,9 +623,14 @@ func _create_ai_opponents():
 	
 	# Convert existing character nodes to AI opponents
 	for data in opponent_data:
+		print("🔄 Processing opponent data: ", data.name, " at ", data.position)
 		var opponent = _convert_character_to_ai(data)
+		print("🔍 _convert_character_to_ai returned: ", opponent.name if opponent else "NULL")
 		if opponent:
+			print("🔍 About to append opponent of type: ", opponent.get_class(), " to array of type: Array[Racer]")
 			_ai_opponents.append(opponent)
+			print("🔍 _ai_opponents.size() after append: ", _ai_opponents.size())
+			print("🔍 Last opponent in array: ", _ai_opponents[-1].name if _ai_opponents.size() > 0 else "NONE")
 			# Add to minimap
 			_minimap.AddOpponent(opponent)
 			print("✅ AI opponent created: ", data.name)
@@ -633,6 +638,11 @@ func _create_ai_opponents():
 			print("❌ Failed to convert character to AI: ", data.name)
 	
 	print("🏁 Total AI opponents created: ", _ai_opponents.size(), " | Player: ", Globals.selected_character)
+	
+	# Additional debug - verify each opponent in the array
+	for i in range(_ai_opponents.size()):
+		var opp = _ai_opponents[i]
+		print("🔍 AI Opponent[", i, "]: ", opp.name if opp else "NULL", " | Valid: ", is_instance_valid(opp) if opp else false)
 
 func _convert_character_to_ai(data: Dictionary) -> Node2D:
 	print("🔄 Converting character to AI: ", data.name)
@@ -650,24 +660,25 @@ func _convert_character_to_ai(data: Dictionary) -> Node2D:
 	
 	print("✓ Character node found: ", character_node.name, " | Type: ", character_node.get_class())
 	
-	# Check if already has AI behavior
+	# Get or create AI controller
+	var ai_controller
 	if character_node.has_node("AIController"):
-		print("⚠️ Character already has AI behavior: ", data.name)
-		return character_node
-	
-	# Add enhanced AI controller script to existing node
-	var ai_script = load("res://Scripts/World Elements/Racers/AIController.gd")
-	if not ai_script:
-		print("❌ AIController script not found")
-		return null
-	
-	print("✓ AIController script loaded successfully")
-	
-	# Create enhanced AI controller component
-	var ai_controller = Node.new()
-	ai_controller.name = "AIController"
-	ai_controller.set_script(ai_script)
-	character_node.add_child(ai_controller)
+		print("⚠️ Character already has AI behavior: ", data.name, " - using existing AIController")
+		ai_controller = character_node.get_node("AIController")
+	else:
+		# Add enhanced AI controller script to existing node
+		var ai_script = load("res://Scripts/World Elements/Racers/AIController.gd")
+		if not ai_script:
+			print("❌ AIController script not found")
+			return null
+		
+		print("✓ AIController script loaded successfully")
+		
+		# Create enhanced AI controller component
+		ai_controller = Node.new()
+		ai_controller.name = "AIController"
+		ai_controller.set_script(ai_script)
+		character_node.add_child(ai_controller)
 	
 	print("✓ AIController node created and added to character")
 	
@@ -679,9 +690,13 @@ func _convert_character_to_ai(data: Dictionary) -> Node2D:
 	if character_node.has_method("SetMapSize"):
 		character_node.SetMapSize(_map.texture.get_size().x)
 		print("✓ Map size set for AI character")
-	if character_node.has_method("_collisionHandler"):
-		character_node._collisionHandler = _collision
-		print("✓ Collision handler set for AI character")
+	if character_node.has_method("Setup"):
+		character_node.Setup(_map.texture.get_size().x, _spriteHandler)
+		print("✓ Character Setup method called")
+	
+	# Set collision handler
+	character_node._collisionHandler = _collision
+	print("✓ Collision handler set for AI character")
 	
 	# Set starting position
 	if character_node.has_method("SetMapPosition"):
@@ -691,6 +706,17 @@ func _convert_character_to_ai(data: Dictionary) -> Node2D:
 	# Make character visible and active
 	character_node.visible = true
 	print("✓ Character made visible")
+	
+	# Ensure proper sprite scale for visibility
+	var sprite_graphic = character_node.ReturnSpriteGraphic()
+	if sprite_graphic and sprite_graphic is AnimatedSprite2D:
+		sprite_graphic.scale = Vector2(3.0, 3.0)
+		print("✓ AI character sprite scale set to 3.0")
+	
+	# Force initial movement to ensure AI starts moving
+	character_node._movementSpeed = 50.0
+	character_node._inputDir = Vector2(0.0, -1.0)  # Forward movement
+	print("✓ Initial movement set for AI character")
 	
 	# Add to SpriteHandler
 	_spriteHandler.AddAIOpponent(character_node)

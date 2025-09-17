@@ -1,7 +1,9 @@
+res://Scripts/World Elements/Racers/Bowser.gd
+res://Scripts/World Elements/Racers/DonkeyKong.gd
+res://Scripts/World Elements/Racers/Luigi.gd
+res://Scripts/World Elements/Racers/Mario.gd
+res://Scripts/World Elements/Racers/AIController.gd
+res://Scripts/World Elements/Racers/Yoshi.gd
 res://Scripts/General/Game.gd
-res://Scripts/World Elements/Racers/AIBehavior.gd
 res://Scenes/MainMenu.tscn
 res://Scenes/main.tscn
-res://Scripts/World Elements/Racers/AIController.gd
-res://Scripts/On Screen Elements/SpriteHandler.gd
-res://Scripts/World Elements/Racers/Player.gd

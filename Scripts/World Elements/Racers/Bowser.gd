@@ -90,6 +90,15 @@ func HandleAnimations():
 			animated_sprite.animation = "Idle"
 			animated_sprite.frame = 0
 
+# Override ReturnPlayerInput para manejar AI correctamente
+func ReturnPlayerInput() -> Vector2:
+	# Si es controlado por AI, no sobrescribir el _inputDir que ya fue configurado por AIController
+	if not _isAIControlled:
+		_inputDir.x = Input.get_action_strength("Left") - Input.get_action_strength("Right")
+		_inputDir.y = -Input.get_action_strength("Forward")
+	# Para AI, _inputDir ya fue configurado por AIController, solo retornarlo
+	return Vector2(_inputDir.x, _inputDir.y)
+
 # Configurar estadísticas específicas de Bowser en _ready
 func _ready():
 	# Bowser es más lento pero más resistente
