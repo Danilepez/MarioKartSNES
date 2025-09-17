@@ -165,6 +165,12 @@ func _setup_selected_character():
 	if _animationHandler and _player:
 		_animationHandler.Setup(_player)
 		print("✅ AnimationHandler reconfigurado para nuevo jugador: ", _player.name)
+	
+	# Ensure proper sprite scale for player visibility
+	var player_sprite = _player.ReturnSpriteGraphic()
+	if player_sprite and player_sprite is AnimatedSprite2D:
+		player_sprite.scale = Vector2(3.0, 3.0)
+		print("✅ Set player sprite scale to 3.0 for: ", _player.name)
 		
 	print("=== DEBUG: _setup_selected_character completado ===")
 	print("Jugador final (_player): ", _player.name if _player else "null")
@@ -175,9 +181,12 @@ func _process(delta):
 	_frame_counter += 1
 	if not _opponents_created and _frame_counter > 60:  # Después de 60 frames (1 segundo)
 		print("🎮 CREANDO OPONENTES AI EN _PROCESS - Frame: ", _frame_counter)
+		print("🎮 Player actual: ", _player.name if _player else "NULL")
+		print("🎮 Selected character: ", Globals.selected_character)
 		_create_ai_opponents()
 		_opponents_created = true
 		print("✅ Oponentes AI creados exitosamente en _process()")
+	
 	
 	if _isVictoryScreenActive:
 		# Solo procesar input para reiniciar si la pantalla de victoria está activa
@@ -210,11 +219,55 @@ func _process(delta):
 	_player.Update(_map.ReturnForward())
 	
 	# Update AI opponents in same loop as player for physics consistency
-	for opponent in _ai_opponents:
+	for i in range(_ai_opponents.size()):
+		var opponent = _ai_opponents[i]
 		if opponent and is_instance_valid(opponent):
-			var ai_behavior = opponent.get_node("AIBehavior")
-			if ai_behavior and ai_behavior.has_method("update_ai_behavior"):
-				ai_behavior.update_ai_behavior(_map.ReturnForward())
+			# Debug AI state before update
+			var pos_before = opponent._mapPosition
+			var speed_before = opponent._movementSpeed
+			var input_before = opponent._inputDir
+			
+			# Try the new enhanced AI controller first
+			var ai_controller = opponent.get_node("AIController")
+			if ai_controller and ai_controller.has_method("update_ai_behavior"):
+				ai_controller.update_ai_behavior(_map.ReturnForward())
+				
+				# Debug AI state after update every 60 frames
+				if Engine.get_process_frames() % 60 == 0:
+					var pos_after = opponent._mapPosition
+					var speed_after = opponent._movementSpeed
+					var velocity = opponent.ReturnVelocity()
+					var move_dir = opponent._currentMoveDirection
+					print("🔍 AI %s UPDATE: Pos(%.0f,%.0f→%.0f,%.0f) Speed(%.1f→%.1f) Vel(%.3f,%.3f,%.3f) Dir:%d" % [
+						opponent.name, pos_before.x, pos_before.z, pos_after.x, pos_after.z,
+						speed_before, speed_after, velocity.x, velocity.y, velocity.z, move_dir
+					])
+			else:
+				print("⚠️ AI Controller not found or missing method for: ", opponent.name)
+				# Fallback to old AIBehavior if it exists
+				var ai_behavior = opponent.get_node("AIBehavior")
+				if ai_behavior and ai_behavior.has_method("update_ai_behavior"):
+					ai_behavior.update_ai_behavior(_map.ReturnForward())
+		else:
+			print("⚠️ Invalid AI opponent at index: ", i)
+	
+	# Debug AI status every 60 frames (1 second) for more frequent updates
+	if Engine.get_process_frames() % 60 == 0 and _ai_opponents.size() > 0:
+		print("🏎️ AI STATUS - Frame: ", Engine.get_process_frames(), " | Active opponents: ", _ai_opponents.size())
+		for i in range(_ai_opponents.size()):
+			var opponent = _ai_opponents[i]
+			if opponent and is_instance_valid(opponent):
+				var pos = opponent._mapPosition
+				var speed = opponent._movementSpeed
+				var input_dir = opponent._inputDir
+				var visible = opponent.visible
+				print("  🤖 %s: Pos(%.0f,%.0f) Speed:%.1f Input:(%.2f,%.2f) Visible:%s" % [opponent.name, pos.x, pos.z, speed, input_dir.x, input_dir.y, visible])
+	
+	# Verify player scale every 300 frames (5 seconds)
+	if Engine.get_process_frames() % 300 == 0:
+		var player_sprite = _player.ReturnSpriteGraphic()
+		if player_sprite:
+			print("🎮 Player ", _player.name, " sprite scale: ", player_sprite.scale)
 	
 	_spriteHandler.Update(_map.ReturnWorldMatrix())
 	_animationHandler.Update()
@@ -553,20 +606,20 @@ func _create_ai_opponents():
 	
 	# Define all possible opponent characters and starting positions
 	var all_opponent_data = [
-		{"name": "mario", "position": Vector3(90, 0, 530), "node_path": "Sprite Handler/Racers/Mario"},
-		{"name": "luigi", "position": Vector3(100, 0, 530), "node_path": "Sprite Handler/Racers/Luigi"},
-		{"name": "bowser", "position": Vector3(146, 0, 530), "node_path": "Sprite Handler/Racers/Bowser"},
-		{"name": "donkeykong", "position": Vector3(123, 0, 540), "node_path": "Sprite Handler/Racers/DonkeyKong"},
-		{"name": "yoshi", "position": Vector3(156, 0, 540), "node_path": "Sprite Handler/Racers/Yoshi"}
+		{"name": "mario", "position": Vector3(100, 0, 520), "node_path": "Sprite Handler/Racers/Mario"},
+		{"name": "luigi", "position": Vector3(110, 0, 525), "node_path": "Sprite Handler/Racers/Luigi"},
+		{"name": "bowser", "position": Vector3(136, 0, 520), "node_path": "Sprite Handler/Racers/Bowser"},
+		{"name": "donkeykong", "position": Vector3(145, 0, 525), "node_path": "Sprite Handler/Racers/DonkeyKong"},
+		{"name": "yoshi", "position": Vector3(155, 0, 520), "node_path": "Sprite Handler/Racers/Yoshi"}
 	]
 	
-	# Filter out the selected character and pick 3 AI opponents
+	# Filter out the selected character - ALL others become AI
 	var opponent_data = []
 	for data in all_opponent_data:
-		if data.name != selected_char and opponent_data.size() < 3:
+		if data.name != selected_char:
 			opponent_data.append(data)
 	
-	print("AI opponents to create: ", opponent_data)
+	print("AI opponents to create: ", opponent_data.size(), " characters")
 	
 	# Convert existing character nodes to AI opponents
 	for data in opponent_data:
@@ -575,11 +628,11 @@ func _create_ai_opponents():
 			_ai_opponents.append(opponent)
 			# Add to minimap
 			_minimap.AddOpponent(opponent)
-			print("✅ AI opponent created from existing node: ", data.name)
+			print("✅ AI opponent created: ", data.name)
 		else:
 			print("❌ Failed to convert character to AI: ", data.name)
 	
-	print("🏁 Total AI opponents created: ", _ai_opponents.size())
+	print("🏁 Total AI opponents created: ", _ai_opponents.size(), " | Player: ", Globals.selected_character)
 
 func _convert_character_to_ai(data: Dictionary) -> Node2D:
 	print("🔄 Converting character to AI: ", data.name)
@@ -595,40 +648,55 @@ func _convert_character_to_ai(data: Dictionary) -> Node2D:
 		print("⚠️ Skipping player character: ", data.name)
 		return null
 	
+	print("✓ Character node found: ", character_node.name, " | Type: ", character_node.get_class())
+	
 	# Check if already has AI behavior
-	if character_node.has_node("AIBehavior"):
+	if character_node.has_node("AIController"):
 		print("⚠️ Character already has AI behavior: ", data.name)
 		return character_node
 	
-	# Add AI behavior script to existing node
-	var ai_script = load("res://Scripts/World Elements/Racers/AIBehavior.gd")
+	# Add enhanced AI controller script to existing node
+	var ai_script = load("res://Scripts/World Elements/Racers/AIController.gd")
 	if not ai_script:
-		print("❌ AIBehavior script not found")
+		print("❌ AIController script not found")
 		return null
 	
-	# Create AI behavior component
-	var ai_behavior = Node.new()
-	ai_behavior.name = "AIBehavior"
-	ai_behavior.set_script(ai_script)
-	character_node.add_child(ai_behavior)
+	print("✓ AIController script loaded successfully")
 	
-	# Configure AI behavior
-	ai_behavior.setup_ai(data.name, data.position, character_node)
+	# Create enhanced AI controller component
+	var ai_controller = Node.new()
+	ai_controller.name = "AIController"
+	ai_controller.set_script(ai_script)
+	character_node.add_child(ai_controller)
 	
-	# Setup map size and collision handler
-	character_node.SetMapSize(_map.texture.get_size().x)
-	character_node._collisionHandler = _collision
+	print("✓ AIController node created and added to character")
+	
+	# Configure AI controller with player reference
+	print("✓ Configuring AI with player reference: ", _player.name if _player else "NULL")
+	ai_controller.setup_ai(data.name, data.position, character_node, _player)
+	
+	# Setup map size and collision handler if methods exist
+	if character_node.has_method("SetMapSize"):
+		character_node.SetMapSize(_map.texture.get_size().x)
+		print("✓ Map size set for AI character")
+	if character_node.has_method("_collisionHandler"):
+		character_node._collisionHandler = _collision
+		print("✓ Collision handler set for AI character")
 	
 	# Set starting position
-	character_node.SetMapPosition(data.position)
+	if character_node.has_method("SetMapPosition"):
+		character_node.SetMapPosition(data.position)
+		print("✓ Starting position set: ", data.position)
 	
 	# Make character visible and active
 	character_node.visible = true
+	print("✓ Character made visible")
 	
 	# Add to SpriteHandler
 	_spriteHandler.AddAIOpponent(character_node)
+	print("✓ Added to SpriteHandler")
 	
-	print("✅ Character converted to AI: ", data.name, " at position: ", data.position)
+	print("✅ Character converted to Enhanced AI: ", data.name, " at position: ", data.position)
 	return character_node
 
 # Función temporal para probar todos los personajes

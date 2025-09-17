@@ -5,9 +5,17 @@ extends Racer
 # Referencia al SpriteHandler para verificar colisiones con hazards
 var _spriteHandler : Node2D
 
+# Flag para determinar si es controlado por AI
+var _isAIControlled : bool = false
+
 func Setup(mapSize : int, spriteHandler : Node2D = null):
 	SetMapSize(mapSize)
 	_spriteHandler = spriteHandler
+
+# Método para configurar si el personaje es controlado por AI
+func SetAIControlled(isAI: bool):
+	_isAIControlled = isAI
+	print("🤖 Character ", name, " AI control set to: ", isAI)
 
 func Update(mapForward : Vector3):
 	if(_isPushedBack):
@@ -45,8 +53,11 @@ func Update(mapForward : Vector3):
 	CheckLapProgress()
 
 func ReturnPlayerInput() -> Vector2:
-	_inputDir.x = Input.get_action_strength("Left") - Input.get_action_strength("Right")
-	_inputDir.y = -Input.get_action_strength("Forward")
+	# Si es controlado por AI, no sobrescribir el _inputDir que ya fue configurado por AIController
+	if not _isAIControlled:
+		_inputDir.x = Input.get_action_strength("Left") - Input.get_action_strength("Right")
+		_inputDir.y = -Input.get_action_strength("Forward")
+	# Para AI, _inputDir ya fue configurado por AIController, solo retornarlo
 	return Vector2(_inputDir.x, _inputDir.y)
 
 # Función para verificar el progreso de las vueltas

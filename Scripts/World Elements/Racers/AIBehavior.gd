@@ -137,11 +137,11 @@ func update_ai_behavior(mapForward: Vector3):
 	# Update waypoint following
 	update_waypoint_following()
 	
-	# Use Player.Update() system instead of bypassing it
+	# Call the character's Update method like a player would
 	if character_node.has_method("Update"):
 		character_node.Update(mapForward)
 	else:
-		# Fallback for non-Player nodes
+		# Fallback: call individual update methods
 		character_node.UpdateMovementSpeed()
 		character_node.UpdateVelocity(mapForward)
 		var next_position = character_node._mapPosition + character_node.ReturnVelocity()
@@ -152,7 +152,7 @@ func update_ai_behavior(mapForward: Vector3):
 	
 	# Debug every 120 frames for performance
 	if Engine.get_process_frames() % 120 == 0:
-		print("🤖 AI ", character_name, " - Pos: ", character_node._mapPosition, " Speed: ", character_node._movementSpeed)
+		print("🤖 AI ", character_name, " - Pos: (%.0f,%.0f,%.0f) | Speed: %.1f | Visible: %s" % [character_node._mapPosition.x, character_node._mapPosition.y, character_node._mapPosition.z, character_node._movementSpeed, character_node.visible])
 
 func update_waypoint_following():
 	if race_waypoints.size() == 0:
@@ -225,21 +225,26 @@ func update_ai_input():
 	var current_pos_2d = Vector2(character_node._mapPosition.x, character_node._mapPosition.z)
 	var target_2d = Vector2(target.x, target.z)
 	
-	# Simple direct movement toward target (bypass NavigationAgent2D for now)
+	# Calculate direction to target
 	var direction = (target_2d - current_pos_2d).normalized()
 	
 	# Set AI input to match Racer system expectations
-	character_node._inputDir.x = clamp(direction.x * 0.6, -1.0, 1.0)  # Steering
+	character_node._inputDir.x = clamp(direction.x * 0.8, -1.0, 1.0)  # Steering - increased responsiveness
 	character_node._inputDir.y = -1.0  # Always accelerate forward
 	
-	# Force minimum speed for AI movement
-	if character_node._movementSpeed < 20.0:
-		character_node._movementSpeed = 30.0
+	# Ensure AI has proper minimum speed to keep moving
+	if character_node._movementSpeed < 30.0:
+		character_node._movementSpeed = 40.0
+	
+	# Add some variation to AI behavior based on personality
+	var random_steering = randf_range(-0.1, 0.1) * ai_aggression
+	character_node._inputDir.x += random_steering
+	character_node._inputDir.x = clamp(character_node._inputDir.x, -1.0, 1.0)
 	
 	# Debug every 60 frames to track movement
 	if Engine.get_process_frames() % 60 == 0:
 		var distance_to_target = current_pos_2d.distance_to(target_2d)
-		print("🎮 AI ", character_name, " - Pos: (%.0f,%.0f) → Target: (%.0f,%.0f) | Dist: %.0f | Speed: %.1f" % [current_pos_2d.x, current_pos_2d.y, target_2d.x, target_2d.y, distance_to_target, character_node._movementSpeed])
+		print("🎮 AI ", character_name, " - Pos: (%.0f,%.0f) → Target: (%.0f,%.0f) | Dist: %.0f | Speed: %.1f | Input: (%.2f,%.2f)" % [current_pos_2d.x, current_pos_2d.y, target_2d.x, target_2d.y, distance_to_target, character_node._movementSpeed, character_node._inputDir.x, character_node._inputDir.y])
 
 func update_animations():
 	if not animated_sprite:

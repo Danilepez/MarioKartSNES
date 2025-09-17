@@ -113,13 +113,13 @@ func HandleSpriteDetail(element : WorldElement):
 		spriteGraphic.visible = true
 		element.visible = true
 		
-		# Handle AnimatedSprite2D - revert to original behavior
+		# Handle AnimatedSprite2D - set proper scale for visibility
 		if spriteGraphic is AnimatedSprite2D:
 			# Ensure the AnimatedSprite2D is playing and visible
 			if not spriteGraphic.is_playing():
 				spriteGraphic.play()
-			# Keep original scale for all characters
-			spriteGraphic.scale = Vector2(1.0, 1.0)
+			# Set larger scale for better visibility (3.0 as requested)
+			spriteGraphic.scale = Vector2(3.0, 3.0)
 			return
 		
 		# For Sprite2D characters, handle region adjustments
