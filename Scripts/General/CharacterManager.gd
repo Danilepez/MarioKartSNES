@@ -1,9 +1,6 @@
-#CharacterManager.gd
 extends Node
 class_name CharacterManager
 
-# Manages character selection and instantiation
-# Simplified to work directly with Racer subclasses
 
 enum CharacterType {
 	MARIO,
@@ -13,7 +10,6 @@ enum CharacterType {
 	TOAD
 }
 
-# Character data structure
 class CharacterData:
 	var name: String
 	var script_path: String
@@ -40,13 +36,12 @@ var character_database = {
 		"res://path/to/luigi_sprite_frames.tres",
 		"res://path/to/luigi_sounds.tres"
 	)
-	# Add more characters here easily:
+	# Add more characters here:
 	# CharacterType.PEACH: CharacterData.new(...),
 	# CharacterType.YOSHI: CharacterData.new(...),
 	# etc.
 }
 
-# Currently selected character
 var current_character: CharacterType = CharacterType.MARIO
 
 func get_character_data(character_type: CharacterType) -> CharacterData:

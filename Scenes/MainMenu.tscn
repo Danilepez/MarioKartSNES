@@ -71,7 +71,6 @@ offset_right = 250.0
 offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "🏎️ MARIO KART 2.5D 🏎️"
 label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 vertical_alignment = 1

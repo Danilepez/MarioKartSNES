@@ -1,8 +1,8 @@
-#Racer.gd
 class_name Racer
 extends WorldElement
 
 var _inputDir : Vector2 = Vector2.ZERO
+var _isAIControlled : bool = false
 
 @export_category("Racer Movement Settings")
 @export var _maxMovementSpeed : float = 120
@@ -24,6 +24,9 @@ var _bumpIntensity : float = 2
 
 func ReturnMovementSpeed() -> float: return _movementSpeed 
 func ReturnCurrentMoveDirection() -> int: return _currentMoveDirection
+
+func SetAIControlled(isAI: bool):
+	_isAIControlled = isAI
 
 func UpdateVelocity(mapForward : Vector3):
 	_velocity = Vector3.ZERO
@@ -55,12 +58,27 @@ func HandleRoadType(nextPixelPos : Vector2i, roadType : Globals.RoadType):
 
 func ReturnOnRoadType() -> Globals.RoadType: return _onRoadType
 
+func ReturnPlayerInput() -> Vector2:
+	return Vector2.ZERO
+
 func UpdateMovementSpeed():
+	var currentInput = ReturnPlayerInput()
+	_inputDir = currentInput
+	
+	if _isAIControlled and Engine.get_process_frames() % 120 == 0:
+		print("🔧 ", name, " | Input:(%.2f,%.2f) | Speed:%.1f/%.1f | AI Flag: %s" % [
+			_inputDir.x, _inputDir.y, _movementSpeed, _maxMovementSpeed, _isAIControlled
+		])
+	
 	if(_inputDir.y != 0):
-		if(_inputDir.y != _currentMoveDirection and _movementSpeed > 0): Deaccelerate()
-		else: Accelerate()
+		if(_inputDir.y != _currentMoveDirection and _movementSpeed > 0): 
+			Deaccelerate()
+		else: 
+			Accelerate()
+		_currentMoveDirection = _inputDir.y
 	else:
-		if(abs(_movementSpeed) > 0): Deaccelerate()
+		if(abs(_movementSpeed) > 0): 
+			Deaccelerate()
 
 func Accelerate():
 	_movementSpeed += _movementAccel * get_process_delta_time()

@@ -1,32 +1,28 @@
-#Globals.gd
 extends Node
 
 var screenSize : Vector2 = Vector2(480, 360)
 
-# Variable para almacenar el personaje seleccionado
-# Opciones disponibles: "Mario", "Luigi", "Bowser", "DonkeyKong"
-var selected_character : String = "Mario"  # Cambia este valor para seleccionar diferente personaje
+var selected_character : String = "Mario"
 
-# Variables del sistema de vueltas
-var currentLap : int = 0
+var currentLap : int = 1
 var totalLaps : int = 3
 var raceFinished : bool = false
 var hasPassedCheckpoint : bool = false
 var raceStartTime : int = 0
-var minimumLapTime : int = 2000  # Tiempo mínimo entre vueltas (2 segundos)
-var lastLapTime : int = 0  # Tiempo de la última vuelta completada
-var useSimpleDetection : bool = true  # Usar detección simple sin checkpoint
+var minimumLapTime : int = 2000
+var lastLapTime : int = 0
+var useSimpleDetection : bool = true
 
-# Variables para detección precisa del cruce de meta
-var playerBeforeFinishLine : bool = true  # Si el jugador está antes de la línea de meta
-var finishLineY : float = 504.0  # Coordenada Y de la línea de meta
+var raceStarted : bool = false
+var raceCountdown : bool = false
 
-# Posición inicial del jugador (posición de inicio)
-var startPosition : Vector3 = Vector3(123, 0, 550)  # X, Y, Z donde Y=0 (altura) y Z un poco después de la meta
+var playerBeforeFinishLine : bool = false
+var finishLineY : float = 520.0
 
-# Posiciones importantes del mapa para detectar vueltas (basadas en las ubicaciones del circuito)
-var finishLinePosition : Vector2 = Vector2(123, 513)  # Posición de la línea de meta (donde está el jugador ahora)
-var checkpointPosition : Vector2 = Vector2(500, 350)  # Punto de control cerca del lago (mitad del circuito)
+var startPosition : Vector3 = Vector3(123, 0, 580)
+
+var finishLinePosition : Vector2 = Vector2(123, 513) 
+var checkpointPosition : Vector2 = Vector2(500, 350) 
 
 enum RoadType {
 	VOID = 0,
@@ -38,11 +34,11 @@ enum RoadType {
 	HAZARD = 6
 }
 
-# Función para reiniciar la carrera
 func reset_race():
-	currentLap = 0
+	currentLap = 1
 	raceFinished = false
-	hasPassedCheckpoint = false
-	playerBeforeFinishLine = true
-	raceStartTime = Time.get_ticks_msec()
-	lastLapTime = raceStartTime
+	raceStarted = false
+	raceCountdown = false
+	lastLapTime = 0
+	playerBeforeFinishLine = false
+	lastLapTime = Time.get_ticks_msec()

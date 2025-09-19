@@ -1,4 +1,3 @@
-#BackgroundEffects.gd
 extends Node2D
 
 @export var _skyLine : Sprite2D

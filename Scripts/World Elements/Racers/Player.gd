@@ -1,20 +1,14 @@
-#Player.gd
 class_name Player
 extends Racer
 
-# Referencia al SpriteHandler para verificar colisiones con hazards
 var _spriteHandler : Node2D
-
-# Flag para determinar si es controlado por AI
-var _isAIControlled : bool = false
 
 func Setup(mapSize : int, spriteHandler : Node2D = null):
 	SetMapSize(mapSize)
 	_spriteHandler = spriteHandler
 
-# Método para configurar si el personaje es controlado por AI
 func SetAIControlled(isAI: bool):
-	_isAIControlled = isAI
+	super.SetAIControlled(isAI)
 	print("🤖 Character ", name, " AI control set to: ", isAI)
 
 func Update(mapForward : Vector3):
@@ -24,24 +18,19 @@ func Update(mapForward : Vector3):
 	var nextPos : Vector3 = _mapPosition + ReturnVelocity()
 	var nextPixelPos : Vector2i = Vector2i(ceil(nextPos.x), ceil(nextPos.z))
 	
-	# Verificar colisiones con paredes
-	if(_collisionHandler.IsCollidingWithWall(Vector2i(ceil(nextPos.x), ceil(_mapPosition.z)))):
-		nextPos.x = _mapPosition.x 
-		SetCollisionBump(Vector3(-sign(ReturnVelocity().x), 0, 0))
-	if(_collisionHandler.IsCollidingWithWall(Vector2i(ceil(_mapPosition.x), ceil(nextPos.z)))):
-		nextPos.z = _mapPosition.z
-		SetCollisionBump(Vector3(0, 0, -sign(ReturnVelocity().z)))
+	if(_collisionHandler.ReturnCurrentRoadType(nextPixelPos) == Globals.RoadType.WALL):
+		_bumpDir = -ReturnVelocity().normalized()
+		_isPushedBack = true
+		_currPushbackTime = 0.0
+		return
 	
-	# Verificar colisiones con hazards (tubos)
-	if _spriteHandler and _spriteHandler.has_method("CheckHazardCollision"):
-		if _spriteHandler.CheckHazardCollision(nextPos):
-			# Obtener dirección de empuje
-			var pushDirection = _spriteHandler.GetHazardCollisionDirection(nextPos)
-			if pushDirection != Vector3.ZERO:
-				# Aplicar empuje en dirección opuesta al hazard
-				SetCollisionBump(pushDirection)
-				# Revertir movimiento
-				nextPos = _mapPosition
+	if _spriteHandler and _spriteHandler.has_method("check_hazard_collision"):
+		var collision_result = _spriteHandler.check_hazard_collision(nextPos)
+		if collision_result.has_collision:
+			_bumpDir = collision_result.bump_direction
+			_isPushedBack = true
+			_currPushbackTime = 0.0
+			return
 	
 	HandleRoadType(nextPixelPos, _collisionHandler.ReturnCurrentRoadType(nextPixelPos))
 	
@@ -49,88 +38,114 @@ func Update(mapForward : Vector3):
 	UpdateMovementSpeed()
 	UpdateVelocity(mapForward)
 	
-	# Verificar sistema de vueltas
 	CheckLapProgress()
 
 func ReturnPlayerInput() -> Vector2:
-	# Si es controlado por AI, no sobrescribir el _inputDir que ya fue configurado por AIController
-	if not _isAIControlled:
+	if Globals.raceStarted:
 		_inputDir.x = Input.get_action_strength("Left") - Input.get_action_strength("Right")
 		_inputDir.y = -Input.get_action_strength("Forward")
-	# Para AI, _inputDir ya fue configurado por AIController, solo retornarlo
+	else:
+		_inputDir = Vector2.ZERO
 	return Vector2(_inputDir.x, _inputDir.y)
-
-# Función para verificar el progreso de las vueltas
 func CheckLapProgress():
-	if Globals.raceFinished:
+	if Globals.raceFinished or not Globals.raceStarted:
 		return
 	
-	var playerPos2D = Vector2(_mapPosition.x, _mapPosition.z)
-	var playerY = playerPos2D.y
-	var playerX = playerPos2D.x
+	var playerX = _mapPosition.x
+	var playerY = _mapPosition.z
+	var finishLineY = 520.0
+	var isInFinishArea = (playerX >= 100 and playerX <= 150)
 	
-	# Debug: mostrar posición cada 60 frames (1 segundo)
-	if Engine.get_process_frames() % 60 == 0:
-		var beforeAfter = "ANTES" if Globals.playerBeforeFinishLine else "DESPUÉS"
-		print("🎯 Pos: (%.0f,%.0f) | %s de meta | Vuelta: %d/%d" % [playerX, playerY, beforeAfter, Globals.currentLap, Globals.totalLaps])
+	if Engine.get_process_frames() % 30 == 0:
+		var status = "DESPUÉS" if playerY > finishLineY else "ANTES"
+		var dist = abs(playerY - finishLineY)
+		print(" Jugador: (%.0f,%.0f) | %s meta | Dist: %.0f | Vuelta: %d/%d" % [
+			playerX, playerY, status, dist, Globals.currentLap, Globals.totalLaps
+		])
 	
-	# Sistema de detección de CRUCE real
-	var finishLineY = Globals.finishLineY
-	var isInFinishArea = (playerX >= 80 and playerX <= 160)  # Área amplia que incluye pista y bordes
+	var isBeforeFinishLine = (playerY < 400)
+	var isCrossingFinishLine = (playerY >= finishLineY - 10 and playerY <= finishLineY + 10)
 	
-	# Determinar si está antes o después de la línea de meta
-	var isBeforeFinishLine = (playerY > finishLineY + 5)  # Un poco más allá para evitar falsos positivos
-	var isAfterFinishLine = (playerY < finishLineY - 5)   # Un poco más acá para evitar falsos positivos
-	
-	# DETECCIÓN DEL CRUCE: De ANTES a DESPUÉS
-	if Globals.playerBeforeFinishLine and isAfterFinishLine and isInFinishArea:
+	if Globals.playerBeforeFinishLine and isCrossingFinishLine and isInFinishArea:
 		var currentTime = Time.get_ticks_msec()
-		# Verificar tiempo mínimo entre vueltas (3 segundos)
-		if (currentTime - Globals.lastLapTime) >= 3000:
-			print("🏁 ¡VUELTA COMPLETADA! Cruzó de ANTES (%.0f) a DESPUÉS (%.0f)" % [finishLineY + 5, playerY])
+		if (currentTime - Globals.lastLapTime) >= 8000:
+			print(" ¡VUELTA COMPLETADA! Cruzó la meta en Y=%.0f" % [playerY])
 			Globals.lastLapTime = currentTime
 			Globals.playerBeforeFinishLine = false
 			CompleteLap()
+		else:
+			var timeLeft = (8000 - (currentTime - Globals.lastLapTime)) / 1000.0
+			print(" Cruce detectado pero muy pronto - Esperar %.1fs más" % timeLeft)
 	
-	# Actualizar estado: si está claramente antes de la línea, marcar como "antes"
-	elif isBeforeFinishLine:
+	elif isBeforeFinishLine and isInFinishArea:
+		if not Globals.playerBeforeFinishLine:
+			print(" Jugador ahora está ANTES de la meta (Y=%.0f < 400)" % [playerY])
 		Globals.playerBeforeFinishLine = true
 
-# Función que se ejecuta al completar una vuelta
 func CompleteLap():
 	Globals.currentLap += 1
-	print("🏁 ¡VUELTA COMPLETADA! Vuelta: %d/%d" % [Globals.currentLap, Globals.totalLaps])
+	print(" ¡VUELTA COMPLETADA! Vuelta: %d/%d" % [Globals.currentLap, Globals.totalLaps])
 	
-	if Globals.currentLap >= Globals.totalLaps:
-		Globals.raceFinished = true
-		print("🏆 ¡CARRERA TERMINADA! Buscando Game manager...")
-		# Buscar el nodo Game directamente
-		var gameNode = get_tree().get_first_node_in_group("game_manager")
-		if gameNode == null:
-			gameNode = get_node("/root/Main")  # Intento alternativo
-		if gameNode and gameNode.has_method("show_victory_screen"):
-			print("✅ Llamando a show_victory_screen...")
-			gameNode.show_victory_screen()
-		else:
-			print("❌ No se pudo encontrar el Game manager")
+	play_lap_sound()
+	
+	if Globals.currentLap > Globals.totalLaps:
+		print(" ¡CARRERA COMPLETADA AL COMPLETAR VUELTA %d/%d!" % [Globals.currentLap - 1, Globals.totalLaps])
+		call_deferred("activate_victory")
 
-# Función para reiniciar completamente el estado del jugador
-func ResetPlayerState():
-	print("🔄 Reiniciando estado del jugador...")
+func play_lap_sound():
+	var game_node = get_tree().get_first_node_in_group("game")
+	if not game_node:
+		print(" No se encontró el nodo Game para reproducir sonido de vuelta")
+		return
 	
-	# Reiniciar velocidad y movimiento
+	if Globals.currentLap == 2:
+		if game_node.has_method("play_lap2_sound"):
+			game_node.play_lap2_sound()
+			print(" Sonido vuelta 2 reproducido")
+	elif Globals.currentLap == 3:
+		if game_node.has_method("play_final_lap_sound"):
+			game_node.play_final_lap_sound()
+			print(" Sonido vuelta final reproducido")
+	else:
+		print(" No hay sonido especial para vuelta ", Globals.currentLap)
+
+func activate_victory():
+	print(" Activando pantalla de victoria...")
+	
+	var game_node = get_tree().get_first_node_in_group("game")
+	if game_node and game_node.has_method("stop_gameplay_music"):
+		game_node.stop_gameplay_music()
+		print(" Música de gameplay detenida por victoria")
+	
+	if game_node and game_node.has_method("show_victory_screen"):
+		game_node.show_victory_screen()
+	else:
+		print(" No se encontró el nodo Game o método show_victory_screen")
+
+func ApplyCollisionBump():
+	_currPushbackTime += get_process_delta_time()
+	if(_currPushbackTime >= _pushbackTime):
+		_isPushedBack = false
+		_currPushbackTime = 0.0
+		_bumpDir = Vector3.ZERO
+		return
+	
+	var bumpVelocity = _bumpDir * _bumpIntensity * (1.0 - (_currPushbackTime / _pushbackTime))
+	SetMapPosition(_mapPosition + bumpVelocity * get_process_delta_time())
+
+func ResetPlayerState():
+	print(" Reiniciando estado del jugador...")
+	
 	_velocity = Vector3.ZERO
 	_movementSpeed = 0.0
 	_currentMoveDirection = 0
 	_inputDir = Vector2.ZERO
 	
-	# Reiniciar efectos de colisión
 	_isPushedBack = false
 	_currPushbackTime = 0.0
 	_bumpDir = Vector3.ZERO
 	
-	# Reiniciar multiplicador de velocidad
 	_speedMultiplier = 1.0
 	_onRoadType = Globals.RoadType.ROAD
 	
-	print("✅ Estado del jugador reiniciado")
+	print(" Estado del jugador reiniciado")

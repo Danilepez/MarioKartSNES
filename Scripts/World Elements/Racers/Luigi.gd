@@ -1,28 +1,20 @@
-#Luigi.gd
 extends Player
 class_name Luigi
 
-# Variables para animaciones progresivas
 var _leftHoldTime: float = 0.0
 var _rightHoldTime: float = 0.0
 var _turnThreshold: float = 0.1
 var _maxTurnTime: float = 1.0
 
-# Propiedades específicas de Luigi
 var character_name: String = "Luigi"
 
-# Override para devolver AnimatedSprite2D en lugar de Sprite2D
 func ReturnSpriteGraphic() -> AnimatedSprite2D:
 	return _spriteGFX as AnimatedSprite2D
 
-# Override del Update para agregar animaciones
 func Update(mapForward : Vector3):
-	# Llamar la lógica original de Player
 	super.Update(mapForward)
-	# Agregar el manejo de animaciones
 	HandleAnimations()
 
-# Sistema de animaciones progresivas mejorado
 func HandleAnimations():
 	var animated_sprite = ReturnSpriteGraphic()
 	if !animated_sprite:
@@ -30,13 +22,10 @@ func HandleAnimations():
 	
 	var input = ReturnPlayerInput()
 	
-	# Permitir animación incluso cuando el personaje esté quieto
-	# Pero usar diferentes umbrales para movimiento vs quieto
 	var can_animate = true
 	var movement_multiplier = 1.0
 	
 	if _movementSpeed <= 0:
-		# Cuando está quieto, permitir solo el primer frame de animación
 		movement_multiplier = 0.25  # Solo llega al primer frame
 	
 	# Detectar input de giro y manejar timing progresivo - DIRECCIONES REALMENTE CORREGIDAS
@@ -90,16 +79,19 @@ func HandleAnimations():
 			animated_sprite.animation = "Idle"
 			animated_sprite.frame = 0
 
-# Override ReturnPlayerInput para manejar AI correctamente
 func ReturnPlayerInput() -> Vector2:
-	# Si es controlado por AI, no sobrescribir el _inputDir que ya fue configurado por AIController
-	if not _isAIControlled:
-		_inputDir.x = Input.get_action_strength("Left") - Input.get_action_strength("Right")
-		_inputDir.y = -Input.get_action_strength("Forward")
-	# Para AI, _inputDir ya fue configurado por AIController, solo retornarlo
-	return Vector2(_inputDir.x, _inputDir.y)
+	if _isAIControlled:
+		if not Globals.raceStarted:
+			return Vector2.ZERO
+		return Vector2(_inputDir.x, _inputDir.y)
+	else:
+		if Globals.raceStarted:
+			_inputDir.x = Input.get_action_strength("Left") - Input.get_action_strength("Right")
+			_inputDir.y = -Input.get_action_strength("Forward")
+		else:
+			_inputDir = Vector2.ZERO
+		return Vector2(_inputDir.x, _inputDir.y)
 
-# Sonidos específicos de Luigi
 func play_character_sound(sound_type: String):
 	match sound_type:
 		"jump":

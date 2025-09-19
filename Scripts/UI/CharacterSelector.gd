@@ -1,4 +1,3 @@
-# CharacterSelector.gd
 extends Control
 
 signal character_selected(character_name: String)
@@ -32,9 +31,7 @@ func _on_yoshi_selected():
 	_start_game("Yoshi")
 
 func _start_game(character_name: String):
-	# Guardar la selección del personaje globalmente
 	Globals.selected_character = character_name
 	print("Personaje seleccionado guardado: ", Globals.selected_character)
 	
-	# Cambiar a la escena principal del juego
 	get_tree().change_scene_to_file("res://Scenes/main.tscn")

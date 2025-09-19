@@ -1,4 +1,3 @@
-#AnimationHandler.gd
 extends Node
 
 @export_category("Player Animation Settings")
@@ -19,11 +18,9 @@ func Setup(player : Racer):
 	if player and player.ReturnSpriteGraphic():
 		_originalPlayerSpriteYPos = player.ReturnSpriteGraphic().position.y
 	else:
-		print("⚠️ AnimationHandler: Invalid player or sprite graphic in Setup")
 		_originalPlayerSpriteYPos = 0
 
 func Update():
-	# Safety check for player and effects
 	if not _player or not is_instance_valid(_player):
 		return
 	

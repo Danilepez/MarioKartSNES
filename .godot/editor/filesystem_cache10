@@ -1,6 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1758152558
-changelog.txt::TextFile/TextFile::-1::1758024057::0::1::::<><><>0<>0<><>::
+::res://::1758234164
 Donut Plains - Pipe Locations.txt::TextFile/TextFile::-1::1758024057::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile/TextFile::-1::1758024057::0::1::::<><><>0<>0<><>::
 ::res://imagenes_final/::1758024057
@@ -10,53 +9,63 @@ segundo_lugar.webp::CompressedTexture2D/CompressedTexture2D::6000776729372335957
 terecer_lugar.webp::CompressedTexture2D/CompressedTexture2D::6336345779432029572::1758024057::1758024057::1::::<><><>0<>0<>ec2253d082e389b0c558f71e088e6c85<>res://.godot/imported/terecer_lugar.webp-f3ed24f7aaddee84b47501d72a1b1ab2.ctex::
 yoshiVictory.ogv::VideoStreamTheora/VideoStreamTheora::2444650230974033108::1758024057::0::1::::<><><>0<>0<><>::
 you_win.png::CompressedTexture2D/CompressedTexture2D::1375453786413288182::1758024057::1758024057::1::::<><><>0<>0<>bb5a6e9a50dad74a84301fb1338d680f<>res://.godot/imported/you_win.png-cf973778eda14338e059e5c48399ab9e.ctex::
+::res://imagenes_inicio/::1758237253
+imagen_inicio.png::CompressedTexture2D::6913423821571210560::1758237247::1758237271::1::::<><><>0<>0<>af8a01e39e2bfbf840a392dec7eb8fcf<>res://.godot/imported/imagen_inicio.png-1222357a7a0beddfaa27450bbbb0f395.ctex::
 ::res://imagenes_selector/::1758024057
 bowser.png::CompressedTexture2D/CompressedTexture2D::660714536310830094::1758024057::1758024057::1::::<><><>0<>0<>666b1f8d30c25d60a82a013088c676a5<>res://.godot/imported/bowser.png-47ad2866a100cc0920957c7e6f72dd2f.ctex::
 donkikon.png::CompressedTexture2D/CompressedTexture2D::2949573988068763230::1758024057::1758024057::1::::<><><>0<>0<>4c2e70b9ef35347db461f4b5fedb8308<>res://.godot/imported/donkikon.png-6530229a99668eeaaa2e3c564f3ab1aa.ctex::
 luigi.png::CompressedTexture2D/CompressedTexture2D::1793849246935630723::1758024057::1758024057::1::::<><><>0<>0<>4e0b3d92f1a4b8f9a54aa6658b58b0d4<>res://.godot/imported/luigi.png-18964afd854675a84216ccd97daff1ef.ctex::
 mario.png::CompressedTexture2D/CompressedTexture2D::6000987987701234215::1758024057::1758024057::1::::<><><>0<>0<>5228631a0d66453394a922d29bc43974<>res://.godot/imported/mario.png-bd5517e02ba7931efac1ec66abeef6cd.ctex::
 selector.png::CompressedTexture2D/CompressedTexture2D::4296111812308231317::1758024057::1758024057::1::::<><><>0<>0<>ec56293824da6db11866b5c67cda7ab2<>res://.godot/imported/selector.png-6c085e5ff5591096c00966433d40f011.ctex::
-::res://Scenes/::1758027020
+::res://Scenes/::1758236949
 BeautifulCharacterSelector.tscn::PackedScene/PackedScene::2165974307400303671::1758024057::0::1::::<><><>0<>0<><>::res://Scripts/UI/BeautifulCharacterSelector.gd<>res://imagenes_final/selector.png
 CharacterSelector.tscn::PackedScene/PackedScene::3893588766679637072::1758024057::0::1::::<><><>0<>0<><>::res://Scripts/UI/CharacterSelector.gd<>uid://cdyv5cen6o3hk::::res://Textures/Racers/mario-3-0000-Photoroom.png<>uid://c073etuygn2jd::::res://Textures/Racers/luigi-3-0000-Photoroom.png<>uid://dt4tujqpcgwa7::::res://Textures/Racers/bowser-3.png<>uid://r7li2mlmst2q::::res://Textures/Racers/donkeykongjr-3.png<>uid://bvioi2jfn2hmv::::res://Textures/Racers/Yoshi Back.png
-main.tscn::PackedScene::9067439345570065480::1758027020::0::1::::<><><>0<>0<><>::uid://chlcrco3oie33::::res://Scripts/General/Game.gd<>uid://nudevegx6152::::res://Scripts/On Screen Elements/BackgroundEffects.gd<>res://Scripts/On Screen Elements/Minimap.gd<>uid://cefyc1o8c12cw::::res://Textures/Tracks/Donut Plains 1 - Sky Line.png<>uid://dauy2f13gf63q::::res://Scripts/Shaders/ModeSeven.gdshader<>uid://do4l3t6fepcy8::::res://Textures/Tracks/Donut Plains 1.png<>uid://b2p41drytlkxt::::res://Textures/Tracks/Donut Plains 1 - Tree Line.png<>uid://cnp7d7djiq0dd::::res://Textures/Tracks/Grass_Tile.png<>uid://da5g5ssjtpnrr::::res://Scripts/World Elements/Pseudo3D.gd<>uid://bvioi2jfn2hmv::::res://Textures/Racers/Yoshi Back.png<>uid://cu4gj3qtw8wk5::::res://Scripts/General/Collision.gd<>uid://b56nphrtp74n6::::res://Textures/Tracks/Donut Plains 1 - Road Type Map.png<>uid://douglwqw1go8u::::res://Scripts/On Screen Elements/SpriteHandler.gd<>uid://7j22fruxga8a::::res://Scripts/World Elements/Racers/Player.gd<>uid://8qepoersu4xt::::res://Scripts/World Elements/Racers/Mario.gd<>uid://bb5lgbfpjxpbq::::res://Scripts/World Elements/Racers/Luigi.gd<>uid://blwjynrfcb66j::::res://Scripts/World Elements/Racers/Bowser.gd<>uid://djl8i2j8ukamx::::res://Scripts/World Elements/Racers/DonkeyKong.gd<>uid://d00rxkyeeaguo::::res://Scripts/World Elements/Racers/Yoshi.gd<>uid://b7avx3fp2eoyj::::res://Scripts/World Elements/Hazard.gd<>uid://dwtfoow25238t::::res://Textures/Racers/Particles/Road_Type_Effects_Sheet.png<>uid://cjiql62qedlox::::res://Scripts/General/AnimationHandler.gd<>uid://cdyv5cen6o3hk::::res://Textures/Racers/mario-3-0000-Photoroom.png<>uid://d1nvgl514d4vw::::res://Textures/Hazards/Orange_Pipes.png<>uid://bfpvub0d3wmwp::::res://Textures/Racers/mario-3-0000-Photoroom_mirror.png<>uid://c073etuygn2jd::::res://Textures/Racers/luigi-3-0000-Photoroom.png<>uid://ckxhmkkamcatc::::res://Textures/Racers/luigi-3-0000-Photoroom_mirror.png<>uid://r7li2mlmst2q::::res://Textures/Racers/donkeykongjr-3.png<>uid://d3hevj7t2xmv6::::res://Textures/Racers/donkeykongjr-3_mirror.png<>uid://dt4tujqpcgwa7::::res://Textures/Racers/bowser-3.png<>uid://utndbb0y7baa::::res://Textures/Racers/bowser-3_mirror.png<>uid://j2o50hrc888s::::res://Textures/Racers/yoshi.png
-MainMenu.tscn::PackedScene::1640763654235634541::1758027020::0::1::::<><><>0<>0<><>::uid://wfnm1mw3qk1m::::res://Scripts/UI/MainMenu.gd
+main.tscn::PackedScene::9067439345570065480::1758236949::0::1::::<><><>0<>0<><>::uid://chlcrco3oie33::::res://Scripts/General/Game.gd<>uid://nudevegx6152::::res://Scripts/On Screen Elements/BackgroundEffects.gd<>res://Scripts/On Screen Elements/Minimap.gd<>uid://cefyc1o8c12cw::::res://Textures/Tracks/Donut Plains 1 - Sky Line.png<>uid://dauy2f13gf63q::::res://Scripts/Shaders/ModeSeven.gdshader<>uid://do4l3t6fepcy8::::res://Textures/Tracks/Donut Plains 1.png<>uid://b2p41drytlkxt::::res://Textures/Tracks/Donut Plains 1 - Tree Line.png<>uid://cnp7d7djiq0dd::::res://Textures/Tracks/Grass_Tile.png<>uid://da5g5ssjtpnrr::::res://Scripts/World Elements/Pseudo3D.gd<>uid://bvioi2jfn2hmv::::res://Textures/Racers/Yoshi Back.png<>uid://cu4gj3qtw8wk5::::res://Scripts/General/Collision.gd<>uid://b56nphrtp74n6::::res://Textures/Tracks/Donut Plains 1 - Road Type Map.png<>uid://douglwqw1go8u::::res://Scripts/On Screen Elements/SpriteHandler.gd<>uid://7j22fruxga8a::::res://Scripts/World Elements/Racers/Player.gd<>uid://8qepoersu4xt::::res://Scripts/World Elements/Racers/Mario.gd<>uid://bb5lgbfpjxpbq::::res://Scripts/World Elements/Racers/Luigi.gd<>uid://blwjynrfcb66j::::res://Scripts/World Elements/Racers/Bowser.gd<>uid://djl8i2j8ukamx::::res://Scripts/World Elements/Racers/DonkeyKong.gd<>uid://d00rxkyeeaguo::::res://Scripts/World Elements/Racers/Yoshi.gd<>uid://b7avx3fp2eoyj::::res://Scripts/World Elements/Hazard.gd<>uid://dwtfoow25238t::::res://Textures/Racers/Particles/Road_Type_Effects_Sheet.png<>uid://cjiql62qedlox::::res://Scripts/General/AnimationHandler.gd<>uid://cdyv5cen6o3hk::::res://Textures/Racers/mario-3-0000-Photoroom.png<>uid://d1nvgl514d4vw::::res://Textures/Hazards/Orange_Pipes.png<>uid://bfpvub0d3wmwp::::res://Textures/Racers/mario-3-0000-Photoroom_mirror.png<>uid://c073etuygn2jd::::res://Textures/Racers/luigi-3-0000-Photoroom.png<>uid://ckxhmkkamcatc::::res://Textures/Racers/luigi-3-0000-Photoroom_mirror.png<>uid://r7li2mlmst2q::::res://Textures/Racers/donkeykongjr-3.png<>uid://d3hevj7t2xmv6::::res://Textures/Racers/donkeykongjr-3_mirror.png<>uid://dt4tujqpcgwa7::::res://Textures/Racers/bowser-3.png<>uid://utndbb0y7baa::::res://Textures/Racers/bowser-3_mirror.png<>uid://j2o50hrc888s::::res://Textures/Racers/yoshi.png
+MainMenu.tscn::PackedScene::1640763654235634541::1758236949::0::1::::<><><>0<>0<><>::uid://wfnm1mw3qk1m::::res://Scripts/UI/MainMenu.gd
 SelectorPersonajes.tscn::PackedScene/PackedScene::-1::1758024057::0::1::::<><><>0<>0<><>::res://Scripts/UI/SelectorPersonajes.gd<>res://imagenes_selector/selector.png
 ::res://Scripts/::1758024057
-::res://Scripts/General/::1758024057
+::res://Scripts/General/::1758234283
 AnimationHandler.gd::GDScript/GDScript::5422048768444206007::1758024057::0::1::::<>Node<><>0<>0<><>::
 CharacterManager.gd::GDScript/GDScript::8821776574165031858::1758024057::0::1::::CharacterManager<>Node<><>0<>0<><>::
 Collision.gd::GDScript/GDScript::6236867065380996114::1758024057::0::1::::<>Node<><>0<>0<><>::
-Game.gd::GDScript::5287023348594185220::1758026974::0::1::::<>Node2D<><>0<>0<><>::
-Globals.gd::GDScript/GDScript::7243457906714833259::1758024057::0::1::::<>Node<><>0<>0<><>::
+Game.gd::GDScript::5287023348594185220::1758237226::0::1::::<>Node2D<><>0<>0<><>::
+Globals.gd::GDScript::7243457906714833259::1758236128::0::1::::<>Node<><>0<>0<><>::
 ::res://Scripts/On Screen Elements/::1758024057
 BackgroundEffects.gd::GDScript/GDScript::953932926003703975::1758024057::0::1::::<>Node2D<><>0<>0<><>::
 Minimap.gd::GDScript/GDScript::-1::1758024057::0::1::::<>Control<><>0<>0<><>::
-SpriteHandler.gd::GDScript::8183578544047655742::1758025133::0::1::::<>Node2D<><>0<>0<><>::
+SpriteHandler.gd::GDScript/GDScript::8183578544047655742::1758025133::0::1::::<>Node2D<><>0<>0<><>::
 ::res://Scripts/Shaders/::1758024057
 ModeSeven.gdshader::Shader/Shader::7202055334484434764::1758024057::0::1::::<><><>0<>0<><>::
-::res://Scripts/UI/::1758024057
-BeautifulCharacterSelector.gd::GDScript/GDScript::7452369067630103810::1758024057::0::1::::<>Control<><>0<>0<><>::
+::res://Scripts/UI/::1758234418
+BeautifulCharacterSelector.gd::GDScript::7452369067630103810::1758234249::0::1::::<>Control<><>0<>0<><>::
 CharacterSelector.gd::GDScript/GDScript::724083569940015570::1758024057::0::1::::<>Control<><>0<>0<><>::
-MainMenu.gd::GDScript/GDScript::1555288584422228904::1758024057::0::1::::<>Control<><>0<>0<><>::
-SelectorPersonajes.gd::GDScript/GDScript::5181475639095047815::1758024057::0::1::::<>Control<><>0<>0<><>::
+MainMenu.gd::GDScript::1555288584422228904::1758234418::0::1::::<>Control<><>0<>0<><>::
+SelectorPersonajes.gd::GDScript/GDScript::5181475639095047815::1758234165::0::1::::<>Control<><>0<>0<><>::
 ::res://Scripts/World Elements/::1758024057
 Hazard.gd::GDScript/GDScript::4633781289313658465::1758024057::0::1::::Hazard<>WorldElement<><>0<>0<><>::
 Pseudo3D.gd::GDScript/GDScript::7221612233136538575::1758024057::0::1::::<>Sprite2D<><>0<>0<><>::
 WorldElement.gd::GDScript/GDScript::3775566068057443096::1758024057::0::1::::WorldElement<>Node2D<><>0<>0<><>::
-::res://Scripts/World Elements/Racers/::1758025257
-AIBehavior.gd::GDScript::3111514950087177327::1758024529::0::1::::AIBehavior<>Node<><>0<>0<><>::
-AIController.gd::GDScript::-1::1758027005::0::1::::AIController<>Node<><>0<>0<><>::
+::res://Scripts/World Elements/Racers/::1758234165
+AIBehavior.gd::GDScript/GDScript::3111514950087177327::1758024529::0::1::::AIBehavior<>Node<><>0<>0<><>::
+AIController.gd::GDScript::-1::1758237144::0::1::::AIController<>Node<><>0<>0<><>::
 AIOpponent.gd::GDScript/GDScript::4102344494033201848::1758024057::0::1::::AIOpponent<>Racer<><>0<>0<><>::
-Bowser.gd::GDScript/GDScript::3204504295584540971::1758024057::0::1::::Bowser<>Player<><>0<>0<><>::
-DonkeyKong.gd::GDScript/GDScript::7815689179788967455::1758024057::0::1::::DonkeyKong<>Player<><>0<>0<><>::
-Luigi.gd::GDScript/GDScript::2519219522578639190::1758024057::0::1::::Luigi<>Player<><>0<>0<><>::
-Mario.gd::GDScript/GDScript::2349532281303060725::1758024057::0::1::::Mario<>Player<><>0<>0<><>::
+Bowser.gd::GDScript::3204504295584540971::1758234905::0::1::::Bowser<>Player<><>0<>0<><>::
+DonkeyKong.gd::GDScript::7815689179788967455::1758234924::0::1::::DonkeyKong<>Player<><>0<>0<><>::
+Luigi.gd::GDScript::2519219522578639190::1758236438::0::1::::Luigi<>Player<><>0<>0<><>::
+Mario.gd::GDScript::2349532281303060725::1758234849::0::1::::Mario<>Player<><>0<>0<><>::
 Opponent.gd::GDScript/GDScript::845696466235672914::1758024057::0::1::::<>Racer<><>0<>0<><>::
-Player.gd::GDScript::2266310261261807938::1758026900::0::1::::Player<>Racer<><>0<>0<><>::
-Racer.gd::GDScript/GDScript::725422902712346386::1758024057::0::1::::Racer<>WorldElement<><>0<>0<><>::
+Player.gd::GDScript::2266310261261807938::1758237199::0::1::::Player<>Racer<><>0<>0<><>::
+Racer.gd::GDScript::725422902712346386::1758236079::0::1::::Racer<>WorldElement<><>0<>0<><>::
 SimpleOpponent.gd::GDScript/GDScript::1472583322243301087::1758024057::0::1::::SimpleOpponent<>WorldElement<><>0<>0<><>::
-Yoshi.gd::GDScript/GDScript::8966666410514351758::1758024057::0::1::::Yoshi<>Player<><>0<>0<><>::
+Yoshi.gd::GDScript::8966666410514351758::1758234943::0::1::::Yoshi<>Player<><>0<>0<><>::
+::res://Sounds/::1758234404
+countdown.mp3::AudioStreamMP3::5387033067931013901::1758164688::1758234404::1::::<><><>0<>0<>e1677c8be44852b53fd53cf4839fab4b<>res://.godot/imported/countdown.mp3-e3a9e135ca789442afb9fe931654dc79.mp3str::
+fall-off-cliff.mp3::AudioStreamMP3::1364101499381737344::1758164710::1758234404::1::::<><><>0<>0<>a0997d2ba3fbcdd30898886b5a83f0da<>res://.godot/imported/fall-off-cliff.mp3-a340b5e886b3fd2f993ed3e6cfcc561a.mp3str::
+gameplay.mp3::AudioStreamMP3::7676415450742986751::1758164750::1758234404::1::::<><><>0<>0<>58a4b53d0be894ef0d051d6d2a72999f<>res://.godot/imported/gameplay.mp3-43444b0d6b71099915c8c5ae5863f187.mp3str::
+mario-kart-lap-2.mp3::AudioStreamMP3::503421433451798440::1758164587::1758234404::1::::<><><>0<>0<>6f71e9db6ff565a8fd95aac3e2534218<>res://.godot/imported/mario-kart-lap-2.mp3-0a4cd9a8c714e4d78fbf4742d280d70d.mp3str::
+mk64_finallap.mp3::AudioStreamMP3::8442655627928073517::1758164226::1758234404::1::::<><><>0<>0<>bde2781f5fd58a579289cacd942577f9<>res://.godot/imported/mk64_finallap.mp3-6335454f8382982208bcc4ba81c38488.mp3str::
+mk64_mario_select_player.mp3::AudioStreamMP3::730687588315708051::1758164262::1758234404::1::::<><><>0<>0<>8cbd515a5e27aa0740b883032c8a87f9<>res://.godot/imported/mk64_mario_select_player.mp3-fa717800f0663255976f3d04b86767f1.mp3str::
+welcome-to-mario-kart_1.mp3::AudioStreamMP3::6949416452709807220::1758164278::1758234404::1::::<><><>0<>0<>efb59d37fd4fef2101708281447b3faa<>res://.godot/imported/welcome-to-mario-kart_1.mp3-e04e1d143db9bf0243a1758ff4a538be.mp3str::
 ::res://Textures/::1758024057
 ::res://Textures/Hazards/::1758024057
 Green_Pipes.png::CompressedTexture2D/CompressedTexture2D::1145419069409386242::1758024057::1758024057::1::::<><><>0<>0<>ee3a3e9ab79d8e512e78151f9f910dba<>res://.godot/imported/Green_Pipes.png-c4ad81269870c966cd7b022296e980c8.ctex::

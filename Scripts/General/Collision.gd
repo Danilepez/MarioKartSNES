@@ -1,4 +1,3 @@
-#Collision.gd
 extends Node
 
 @export var _collisionMap : Texture
