@@ -33,8 +33,6 @@ var _frame_counter : int = 0
 var _navigation_region : NavigationRegion2D
 
 func _ready():
-	print("=== INICIANDO GAME.GD ===")
-	print("Globals.selected_character al inicio: ", Globals.selected_character)
 	
 	_setup_selected_character()
 	
@@ -42,7 +40,6 @@ func _ready():
 		print("ERROR CRITICO: _player no fue asignado en _setup_selected_character!")
 		return
 	
-	print("Continuando con inicialización del juego...")
 	_map.Setup(Globals.screenSize, _player)
 	_collision.Setup()
 	_spriteHandler.Setup(_map.ReturnWorldMatrix(), _map.texture.get_size().x, _player, _collision)
@@ -71,7 +68,6 @@ func _ready():
 	var script_name = "sin script"
 	if _player and _player.get_script():
 		script_name = _player.get_script().get_global_name()
-	print("Script del personaje: ", script_name)
 	
 	await get_tree().create_timer(1.0).timeout
 	start_countdown()
@@ -90,18 +86,6 @@ func _setup_selected_character():
 		print("ERROR: Nodo Luigi no encontrado!")
 		return
 	
-	if bowser_node:
-		print("Bowser ")
-	else:
-		print("Bowser no encontrado!")
-	if donkey_kong_node:
-		print("Donkey Kong ")
-	else:
-		print("Donkey Kong no encontrado!")
-	if yoshi_node:
-		print("Yoshi ")
-	else:
-		print("Yoshi no encontrado!")
 	
 	mario_node.visible = false
 	luigi_node.visible = false
@@ -112,7 +96,6 @@ func _setup_selected_character():
 	if yoshi_node:
 		yoshi_node.visible = false
 	
-	print("Seleccionando personaje: '", Globals.selected_character, "'")
 	match Globals.selected_character:
 		"Luigi":
 			luigi_node.visible = true
@@ -211,7 +194,7 @@ func _process(_delta):
 				if ai_behavior and ai_behavior.has_method("update_ai_behavior"):
 					ai_behavior.update_ai_behavior(_map.ReturnForward())
 		else:
-			print("AI invalido: ", i)
+			pass
 	
 	if Engine.get_process_frames() % 60 == 0 and _ai_opponents.size() > 0:
 		for i in range(_ai_opponents.size()):
@@ -222,10 +205,6 @@ func _process(_delta):
 				var input_dir = opponent._inputDir
 				var is_visible = opponent.visible
 	
-	if Engine.get_process_frames() % 300 == 0:
-		var player_sprite = _player.ReturnSpriteGraphic()
-		if player_sprite:
-			print("Player ", _player.name, " sprite scale: ", player_sprite.scale)
 	
 	_spriteHandler.Update(_map.ReturnWorldMatrix())
 	_animationHandler.Update()
@@ -390,7 +369,6 @@ func restart_race():
 	
 	if _victoryVideoPlayer:
 		_victoryVideoPlayer.stop()
-		print("🎬 Video de victoria detenido")
 	
 	if _pulsingTween:
 		_pulsingTween.kill()
@@ -440,7 +418,6 @@ func _setup_simple_opponents():
 		var opponent = _create_simple_opponent(character_name, i)
 		if opponent:
 			_ai_opponents.append(opponent)
-			print("Oponente creado: ", character_name)
 		else:
 			print("ERROR: No se pudo crear oponente: ", character_name)
 	
@@ -448,8 +425,6 @@ func _create_simple_opponent(character_name: String, position_index: int) -> Sim
 	var opponent = SimpleOpponent.new()
 	if not opponent:
 		return null
-	
-	print("Oponente creado: ", character_name)
 	
 	opponent.character_name = character_name
 	opponent.ai_speed = randf_range(60.0, 100.0)  
@@ -519,7 +494,6 @@ func _create_ai_opponents():
 			if _ai_opponents.size() > 0:
 				last_opponent_name = _ai_opponents[-1].name
 			_minimap.AddOpponent(opponent)
-		else:
 	
 	for i in range(_ai_opponents.size()):
 		var opp = _ai_opponents[i]
@@ -571,7 +545,6 @@ func _convert_character_to_ai(data: Dictionary) -> Node2D:
 # ========== SISTEMA DE MÚSICA DE GAMEPLAY ==========
 
 func setup_gameplay_music():
-	print("🎵 Configurando música de gameplay...")
 	
 	_gameplayMusic = AudioStreamPlayer.new()
 	add_child(_gameplayMusic)
@@ -584,9 +557,8 @@ func setup_gameplay_music():
 		elif music_stream is AudioStreamOggVorbis:
 			music_stream.loop = true
 		_gameplayMusic.stream = music_stream
-		print("Música de gameplay cargada: ", gameplay_music_path)
 	else:
-		print("No se encontró archivo de música: ", gameplay_music_path)
+		print("ERROR: No se encontró archivo de música: ", gameplay_music_path)
 	
 	_lap2Audio = AudioStreamPlayer.new()
 	add_child(_lap2Audio)
@@ -619,7 +591,6 @@ func play_final_lap_sound():
 # ========== SISTEMA DE COUNTDOWN 3-2-1-GO ==========
 
 func setup_countdown_system():
-	print("🚦 Configurando sistema de countdown...")
 	
 	_countdownLabel = Label.new()
 	_countdownLabel.text = ""
@@ -655,11 +626,8 @@ func setup_countdown_system():
 	if ResourceLoader.exists(countdown_sound_path):
 		var countdown_sound = load(countdown_sound_path)
 		_countdownAudio.stream = countdown_sound
-		print("Sonido de countdown cargado")
 	else:
-		print("Sonido de countdown no encontrado en: ", countdown_sound_path)
-	
-	print("✅ Sistema de countdown configurado")
+		print("ERROR: Sonido de countdown no encontrado en: ", countdown_sound_path)
 
 func setup_lap_hud():	
 	_lapLabel = Label.new()
@@ -686,7 +654,7 @@ func setup_lap_hud():
 
 func start_countdown():	
 	if not _countdownLabel or not _countdownTimer:
-		print("Error: Sistema de countdown no configurado")
+		print("ERROR: Sistema de countdown no configurado")
 		return
 	
 	Globals.raceCountdown = true

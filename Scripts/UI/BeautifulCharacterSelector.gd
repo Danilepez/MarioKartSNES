@@ -15,7 +15,6 @@ var hover_tween : Tween
 signal character_selected(character_name: String)
 
 func _ready():
-	print("=== INICIALIZANDO BEAUTIFUL CHARACTER SELECTOR ===")
 	setup_ui()
 	setup_character_buttons()
 	update_selection_display()
@@ -32,7 +31,6 @@ func setup_ui():
 		start_button.pressed.connect(_on_start_pressed)
 
 func setup_character_buttons():
-	print("Configurando botones de personajes...")
 	
 	for child in character_container.get_children():
 		child.queue_free()
@@ -64,9 +62,6 @@ func setup_character_buttons():
 		if ResourceLoader.exists(texture_path):
 			var texture = load(texture_path) as Texture2D
 			button.texture_normal = texture
-			print("Textura cargada para ", character_name, ": ", texture_path)
-		else:
-			print("No se pudo cargar textura para ", character_name, ": ", texture_path)
 		
 		button.custom_minimum_size = Vector2(80, 80)
 		button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
@@ -87,14 +82,9 @@ func setup_character_buttons():
 		h_container.add_child(v_container)
 		character_buttons.append(button)
 	
-	print("Configurados ", character_buttons.size(), " botones de personajes")
 
 func _on_character_pressed(index: int):
 	var character_name = character_names[index]
-	print("Personaje seleccionado: ", character_name)
-	
-	if character_name == "DonkeyKong":
-		print("DonkeyKong seleccionado")
 	
 	current_selection = index
 	update_selection_display()
@@ -163,7 +153,6 @@ func animate_hover(index: int, is_hovering: bool):
 
 func _on_start_pressed():
 	var selected_character = character_names[current_selection]
-	print("Iniciando carrera con: ", selected_character)
 	
 	Globals.selected_character = selected_character
 	

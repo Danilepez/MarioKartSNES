@@ -97,8 +97,6 @@ func _ready():
 	_movementAccel = 56
 	_movementDeaccel = 96
 	_bumpIntensity = 1.6
-	
-	print("Bowser configurado - Velocidad max: ", _maxMovementSpeed, " Aceleración: ", _movementAccel)
 
 func GetCharacterName() -> String:
 	return character_name

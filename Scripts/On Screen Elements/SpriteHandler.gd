@@ -28,20 +28,14 @@ func Setup(worldMatrix : Basis, mapSize : int, player : Racer, collisionHandler 
 					for child in group_node.get_children():
 						if child is Hazard:
 							_hazards.append(child)
-						else:
-							print("Nodo ignorado: ", child.name, " tipo: ", child.get_class())
-				else:
-					print("  Grupo NO encontrado: ", group_name)
-		else:
-			print("ERROR: Nodo Hazards no encontrado!")
 	
 	for i in range(_hazards.size()):
 		if _hazards[i] == null:
-			print("Hazard[", i, "]: ES NULL!")
+			pass
 		elif not is_instance_valid(_hazards[i]):
-			print("Hazard[", i, "]: NO ES VÁLIDO!")
+			pass
 		else:
-			print("Hazard[", i, "]: ", _hazards[i].name, " en posición ", _hazards[i].ReturnMapPosition())
+			pass
 	
 	_worldElements.append_array(_hazards)
 	WorldToScreenPosition(player)
@@ -63,9 +57,6 @@ func Update(worldMatrix : Basis):
 		if hazard and is_instance_valid(hazard):
 			if hazard.ReturnSpriteGraphic().visible:
 				visibleHazards += 1
-	
-	if Engine.get_process_frames() % 60 == 0:
-		print("Frame ", Engine.get_process_frames(), ": ", visibleHazards, " hazards visibles de ", _hazards.size(), " total, ", _worldElements.size(), " elementos totales")
 	
 	HandleYLayerSorting()
 
@@ -179,37 +170,27 @@ func WorldToScreenPosition(worldElement : WorldElement):
 		var sprite_size = animated_sprite.sprite_frames.get_frame_texture(animated_sprite.animation, animated_sprite.frame).get_size()
 		screenPos.y -= (sprite_size.y * animated_sprite.scale.x) / 2
 	else:
-		print("Warning: Unknown sprite type: ", sprite_graphic.get_class())
+		pass
 	
 	if(screenPos.floor().x > Globals.screenSize.x or screenPos.x < 0 or screenPos.floor().y > Globals.screenSize.y or screenPos.y < 0): 
 		worldElement.visible = false
 		worldElement.SetScreenPosition(Vector2i(-1000, -1000)) 
-		if worldElement is Hazard and Engine.get_process_frames() % 120 == 0:
-			print("  -> FUERA DE PANTALLA: ", screenPos, " (screen size: ", Globals.screenSize, ")")
+		pass
 		return  
 	else:
 		worldElement.SetScreenPosition(Vector2i(screenPos.floor()))
-		if worldElement is Hazard and Engine.get_process_frames() % 120 == 0:
-			print("  -> VISIBLE en pantalla: ", screenPos.floor())
+		pass
 
 func AddOpponent(opponent: Racer):
 	if not opponent:
-		print("Error: Oponente es null, no se puede agregar")
 		return
 		
 	if not _worldElements.has(opponent):
 		_worldElements.append(opponent)
-		print("Oponente agregado al SpriteHandler: ", opponent.name)
-	else:
-		print("Oponente ya existe en SpriteHandler: ", opponent.name)
 
 func AddSimpleOpponent(opponent: SimpleOpponent):
 	if not opponent:
-		print("Error: Oponente simple es null, no se puede agregar")
 		return
 		
 	if not _worldElements.has(opponent):
 		_worldElements.append(opponent)
-		print("Oponente simple agregado al SpriteHandler: ", opponent.character_name)
-	else:
-		print("Oponente simple ya existe en SpriteHandler: ", opponent.character_name)

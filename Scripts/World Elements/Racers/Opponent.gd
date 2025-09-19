@@ -47,9 +47,6 @@ func setup_character_sprites():
 		var sprite_node = get_node_or_null("Sprite2D")
 		if sprite_node and texture:
 			sprite_node.texture = texture
-		print("Oponente configurado: ", character_name)
-	else:
-		print("Sprite no encontrado para oponente: ", character_name)
 
 func _physics_process(delta):
 	if not is_player_controlled:
@@ -118,4 +115,3 @@ func set_starting_position(pos : Vector3, track_pos : float):
 	position = Vector2(pos.x, pos.y)
 	track_position = track_pos
 	track_progress = 0.0
-	print("🏁 Oponente ", character_name, " posicionado en: ", position)

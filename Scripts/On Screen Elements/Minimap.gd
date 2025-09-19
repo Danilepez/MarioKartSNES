@@ -63,10 +63,3 @@ func update_icon_position(racer: Racer, icon: Control):
 	var finalPos = Vector2(iconPosX - iconSize.x/2, iconPosZ - iconSize.y/2)
 	
 	icon.position = finalPos
-	
-	if racer == _player and randf() < 0.005:
-		print("=== MINIMAP DEBUG ===")
-		print("Pos jugador mundo: (", racerMapPos.x, ", ", racerMapPos.z, ")")
-		print("Normalizado: (", normalizedX, ", ", normalizedZ, ")")
-		print("Pos en minimapa: ", finalPos)
-		print("Tamaño minimapa: ", size)

@@ -9,7 +9,6 @@ func Setup(mapSize : int, spriteHandler : Node2D = null):
 
 func SetAIControlled(isAI: bool):
 	super.SetAIControlled(isAI)
-	print("🤖 Character ", name, " AI control set to: ", isAI)
 
 func Update(mapForward : Vector3):
 	if(_isPushedBack):
@@ -56,12 +55,6 @@ func CheckLapProgress():
 	var finishLineY = 520.0
 	var isInFinishArea = (playerX >= 100 and playerX <= 150)
 	
-	if Engine.get_process_frames() % 30 == 0:
-		var status = "DESPUÉS" if playerY > finishLineY else "ANTES"
-		var dist = abs(playerY - finishLineY)
-		print(" Jugador: (%.0f,%.0f) | %s meta | Dist: %.0f | Vuelta: %d/%d" % [
-			playerX, playerY, status, dist, Globals.currentLap, Globals.totalLaps
-		])
 	
 	var isBeforeFinishLine = (playerY < 400)
 	var isCrossingFinishLine = (playerY >= finishLineY - 10 and playerY <= finishLineY + 10)
@@ -69,23 +62,20 @@ func CheckLapProgress():
 	if Globals.playerBeforeFinishLine and isCrossingFinishLine and isInFinishArea:
 		var currentTime = Time.get_ticks_msec()
 		if (currentTime - Globals.lastLapTime) >= 8000:
-			print(" ¡VUELTA COMPLETADA! Cruzó la meta en Y=%.0f" % [playerY])
 			Globals.lastLapTime = currentTime
 			Globals.playerBeforeFinishLine = false
 			CompleteLap()
 		else:
 			var timeLeft = (8000 - (currentTime - Globals.lastLapTime)) / 1000.0
-			print(" Cruce detectado pero muy pronto - Esperar %.1fs más" % timeLeft)
 	
 	elif isBeforeFinishLine and isInFinishArea:
 		if not Globals.playerBeforeFinishLine:
-			print(" Jugador ahora está ANTES de la meta (Y=%.0f < 400)" % [playerY])
+			pass
 		Globals.playerBeforeFinishLine = true
 
 func CompleteLap():
 	Globals.currentLap += 1
 	print(" ¡VUELTA COMPLETADA! Vuelta: %d/%d" % [Globals.currentLap, Globals.totalLaps])
-	
 	play_lap_sound()
 	
 	if Globals.currentLap > Globals.totalLaps:
@@ -101,26 +91,19 @@ func play_lap_sound():
 	if Globals.currentLap == 2:
 		if game_node.has_method("play_lap2_sound"):
 			game_node.play_lap2_sound()
-			print(" Sonido vuelta 2 reproducido")
 	elif Globals.currentLap == 3:
 		if game_node.has_method("play_final_lap_sound"):
 			game_node.play_final_lap_sound()
-			print(" Sonido vuelta final reproducido")
-	else:
-		print(" No hay sonido especial para vuelta ", Globals.currentLap)
 
 func activate_victory():
-	print(" Activando pantalla de victoria...")
-	
 	var game_node = get_tree().get_first_node_in_group("game")
 	if game_node and game_node.has_method("stop_gameplay_music"):
 		game_node.stop_gameplay_music()
-		print(" Música de gameplay detenida por victoria")
 	
 	if game_node and game_node.has_method("show_victory_screen"):
 		game_node.show_victory_screen()
 	else:
-		print(" No se encontró el nodo Game o método show_victory_screen")
+		print("ERROR: No se encontró el nodo Game o método show_victory_screen")
 
 func ApplyCollisionBump():
 	_currPushbackTime += get_process_delta_time()
@@ -134,7 +117,6 @@ func ApplyCollisionBump():
 	SetMapPosition(_mapPosition + bumpVelocity * get_process_delta_time())
 
 func ResetPlayerState():
-	print(" Reiniciando estado del jugador...")
 	
 	_velocity = Vector3.ZERO
 	_movementSpeed = 0.0
@@ -147,5 +129,3 @@ func ResetPlayerState():
 	
 	_speedMultiplier = 1.0
 	_onRoadType = Globals.RoadType.ROAD
-	
-	print(" Estado del jugador reiniciado")

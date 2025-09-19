@@ -37,15 +37,13 @@ func setup_ai(char_name: String, start_pos: Vector3, char_node: Node2D, player_r
 	if character_node.has_method("SetAIControlled"):
 		character_node.SetAIControlled(true)
 	else:
-		print("SetAIControlled method not found")
+		print("ERROR: SetAIControlled method not found")
 	
 	character_node._inputDir = Vector2.ZERO
 	
 	var sprite_graphic = character_node.ReturnSpriteGraphic()
 	if sprite_graphic and sprite_graphic is AnimatedSprite2D:
 		sprite_graphic.scale = Vector2(3.0, 3.0)
-	else:
-		print("No AnimatedSprite2D found or ReturnSpriteGraphic failed")
 	
 	character_node._movementSpeed = 60.0
 	character_node._maxMovementSpeed = ai_speed
@@ -204,15 +202,6 @@ func update_ai_input():
 	
 	character_node._maxMovementSpeed = target_speed
 	
-	if Engine.get_process_frames() % 60 == 0:
-		print("🔧 AI ", character_name, " | Input:(%.2f,%.2f) | Speed:%.1f/%.1f | AI Flag: %s" % [
-			character_node._inputDir.x, character_node._inputDir.y, 
-			character_node._movementSpeed, character_node._maxMovementSpeed,
-			character_node._isAIControlled
-		])
-		
-		var returned_input = character_node.ReturnPlayerInput()
-		print("    ↳ ReturnPlayerInput returns: (%.2f,%.2f)" % [returned_input.x, returned_input.y])
 
 func ReturnPlayerInput() -> Vector2:
 	if character_node:

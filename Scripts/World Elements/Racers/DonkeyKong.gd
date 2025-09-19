@@ -97,8 +97,6 @@ func _ready():
 	_movementAccel = 63
 	_movementDeaccel = 102
 	_bumpIntensity = 1.8
-	
-	print("Donkey Kong configurado - Velocidad max: ", _maxMovementSpeed, " Aceleración: ", _movementAccel)
 
 func GetCharacterName() -> String:
 	return character_name

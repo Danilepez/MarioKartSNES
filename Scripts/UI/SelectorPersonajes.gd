@@ -22,7 +22,6 @@ var character_positions : Array[Vector2] = [
 signal character_selected(character_name: String)
 
 func _ready():
-	print("=== INICIANDO SELECTOR DE PERSONAJES MEJORADO ===")
 	setup_background()
 	await setup_characters()
 	setup_ui()
@@ -204,7 +203,6 @@ func animate_characters():
 
 func _on_start_pressed():
 	var selected_character = character_names[current_selection]
-	print("🏁 Iniciando carrera con: ", selected_character)
 	
 	var character_mapping = {
 		"mario": "Mario",
@@ -216,8 +214,6 @@ func _on_start_pressed():
 	
 	var game_character = character_mapping.get(selected_character, "Mario")
 	Globals.selected_character = game_character
-	
-	print("🎮 Personaje en Globals: ", Globals.selected_character)
 	
 	get_tree().change_scene_to_file("res://Scenes/main.tscn")
 

@@ -57,9 +57,7 @@ func setup_character_appearance():
 			var texture = load(texture_path)
 			if _spriteGFX and _spriteGFX is Sprite2D:
 				_spriteGFX.texture = texture
-				_spriteGFX.scale = Vector2(0.8, 0.8)
-			else:
-				print("_spriteGFX not available or not Sprite2D")
+			_spriteGFX.scale = Vector2(0.8, 0.8)
 		else:
 			print("Texture not found: ", texture_path)
 
@@ -196,7 +194,6 @@ func find_alternative_path():
 	
 	if avoidance_direction != Vector2.ZERO:
 		_inputDir.x = avoidance_direction.x * 0.8
-		print("🚧 AI ", character_name, " avoiding obstacle, steering: ", _inputDir.x)
 
 func _on_velocity_computed(safe_velocity: Vector2):
 	var velocity_3d = Vector3(safe_velocity.x, 0, safe_velocity.y)

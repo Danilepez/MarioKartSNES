@@ -9,7 +9,6 @@ var button_tween : Tween
 var welcome_audio : AudioStreamPlayer
 
 func _ready():
-	print("=== MENÚ PRINCIPAL CARGADO ===")
 	setup_background_image()
 	setup_welcome_sound()
 	setup_menu()
@@ -39,16 +38,11 @@ func setup_background_image():
 				var texture = load(image_path)
 				texture_rect.texture = texture
 				background.add_child(texture_rect)
-			else:
 		elif background is TextureRect:
 			var image_path = "res://imagenes_inicio/imagen_inicio.png"
 			if ResourceLoader.exists(image_path):
 				var texture = load(image_path)
 				background.texture = texture
-		else:
-			print("Background no es ColorRect ni TextureRect: ", background.get_class())
-	else:
-		print("Nodo Background no encontrado")
 
 func setup_welcome_sound():
 	welcome_audio = AudioStreamPlayer.new()
@@ -59,15 +53,13 @@ func setup_welcome_sound():
 		var sound_stream = load(sound_path)
 		welcome_audio.stream = sound_stream
 		welcome_audio.volume_db = -5.0
-		print("Sonido de bienvenida cargado: ", sound_path)
 	else:
-		print("Sonido de bienvenida no encontrado: ", sound_path)
+		print("ERROR: Sonido de bienvenida no encontrado: ", sound_path)
 
 func play_welcome_sound():
 	if welcome_audio and welcome_audio.stream:
 		await get_tree().create_timer(0.5).timeout
 		welcome_audio.play()
-		print("Sonido de bienvenida reproducido")
 
 func animate_title():
 	if title_label:
@@ -77,16 +69,13 @@ func animate_title():
 		title_tween.tween_property(title_label, "modulate", Color(1.0, 1.0, 1.0, 1.0), 1.0)
 
 func _on_start_pressed():
-	print("🎮 Iniciando selector de personajes...")
 	
 	if welcome_audio and welcome_audio.playing:
 		welcome_audio.stop()
-		print("Música de bienvenida detenida")
 	
 	get_tree().change_scene_to_file("res://Scenes/SelectorPersonajes.tscn")
 
 func _on_quit_pressed():
-	print("👋 Saliendo del juego...")
 	get_tree().quit()
 
 func _on_button_hover(button: Button):

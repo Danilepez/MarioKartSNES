@@ -23,9 +23,8 @@ func setup_ai(char_name: String, start_pos: Vector3, char_node: Node2D):
 	
 	animated_sprite = find_animated_sprite(character_node)
 	if not animated_sprite:
-		print("No AnimatedSprite2D found in character node: ", char_name)
+		pass
 	else:
-		print("Found AnimatedSprite2D: ", animated_sprite.name)
 		animated_sprite.play("Idle")
 	
 	setup_ai_personality()

@@ -93,14 +93,4 @@ func ReturnPlayerInput() -> Vector2:
 		return Vector2(_inputDir.x, _inputDir.y)
 
 func play_character_sound(sound_type: String):
-	match sound_type:
-		"jump":
-			print("Luigi: Let's-a go!")
-		"hit":
-			print("Luigi: Oh no!")
-		"win":
-			print("Luigi: I'm-a the winner!")
-		"scared":
-			print("Luigi: Mamma mia!")
-		_:
-			print("Luigi: Here we go!")
+	pass

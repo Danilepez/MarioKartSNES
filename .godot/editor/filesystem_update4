@@ -14,3 +14,8 @@ res://Scripts/World Elements/Racers/Yoshi.gd
 res://Scripts/World Elements/Racers/Racer.gd
 res://Scripts/General/AnimationHandler.gd
 res://Scripts/General/Collision.gd
+res://Scripts/On Screen Elements/BackgroundEffects.gd
+res://Scripts/On Screen Elements/Minimap.gd
+res://Scripts/On Screen Elements/SpriteHandler.gd
+res://Scripts/World Elements/Racers/AIOpponent.gd
+res://Scripts/World Elements/Racers/SimpleOpponent.gd

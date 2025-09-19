@@ -93,8 +93,6 @@ func _ready():
 	_movementAccel = 56
 	_movementDeaccel = 140
 	_bumpIntensity = 2.2
-	
-	print("Yoshi configurado - Velocidad max: ", _maxMovementSpeed, " Aceleración: ", _movementAccel)
 
 func GetCharacterName() -> String:
 	return character_name
@@ -103,12 +101,4 @@ func GetDebugInfo() -> String:
 	return "Character: " + character_name + "\nType: Speed\nMax Speed: " + str(_maxMovementSpeed) + "\nAcceleration: " + str(_movementAccel)
 
 func play_character_sound(sound_type: String):
-	match sound_type:
-		"jump":
-			print("Yoshi: Yoshi!")
-		"hit":
-			print("Yoshi: Uwah!")
-		"win":
-			print("Yoshi: Yahoo!")
-		_:
-			print("Yoshi: Yoshi yoshi!")
+	pass
